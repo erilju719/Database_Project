@@ -59,7 +59,7 @@
 
 </section>
 
-<section class="engine"><a rel="external" href="https://mobirise.com">top responsive web page builder software</a></section><section class="mbr-section mbr-section-hero mbr-section-full mbr-parallax-background mbr-section-with-arrow" id="header1-1" style="background-image: url(assets/images/jumbotron.jpg);">
+<section class="engine"><a rel="external" href="https://mobirise.com">top mobile web site creator software</a></section><section class="mbr-section mbr-section-hero mbr-section-full mbr-parallax-background" id="header1-1" style="background-image: url(assets/images/jumbotron.jpg);">
 
     
 
@@ -70,21 +70,23 @@
                 <div class="mbr-section col-md-10 col-md-offset-1 text-xs-center">
 
                     <h1 class="mbr-section-title display-1">CS2102</h1>
-                    <p class="mbr-section-lead lead">The pre-alpha demo. Now available on Github.</p> 
+                    <p class="mbr-section-lead lead">The pre-alpha demo. Now available on github.</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <table>
-<tr> <td colspan="2" style="background-color:#FFA500;">
-<h1> Demo Book Catalog</h1>
-</td> </tr>
-
-<?php
-$dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
+    <div class ="mbr-table-cell">
+      <p class = "mbr-section-lead lead"> Demo Book Catalog</p>
+            <?php
+    $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
-?>
+    ?>
 
 <tr>
 <td style="background-color:#eeeeee;">
-<form>
+<form method="post">
         Title: <input type="text" name="Title" id="Title">
 
         <select name="Language"> <option value="">Select Language</option> </select>
@@ -95,14 +97,14 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres pas
         <input type="submit" name="formSubmit" value="Search" >
 </form>
 
-<?php if(isset($_GET['formSubmit'])) 
+<?php if(isset($_POST['formSubmit'])) 
 {
-  $query = 'SELECT DISTINCT language FROM book';
+  $title = $_POST['Title'];
+  $query = "SELECT DISTINCT b.title FROM book b WHERE b.title LIKE '%$title%'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
-  echo "<b>SQL: </b>".$query."<br><br>";
-  
+  echo "<b>SQL: </b>".$query."<br></br>";
   while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t<tr>\n";
     foreach ($line as $col_value) {
@@ -110,7 +112,6 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres pas
     }
     echo "\t</tr>\n";
   } 
-  
   pg_free_result($result);
 }
 ?>
@@ -118,29 +119,16 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres pas
 <?php
 pg_close($dbconn);
 ?>
+</div>
 
-<tr>
-<td colspan="2" style="background-color:#FFA500; text-align:center;"> Copyright &#169; CS2102
-</td> </tr>
-</table>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-    <div class="mbr-arrow mbr-arrow-floating" aria-hidden="true"><a href="#footer1-2"><i class="mbr-arrow-icon"></i></a></div>
+    
 
 </section>
 
 <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-2" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
     
     <div class="container">
-        <p class="text-xs-center">Copyright (c) 2016 Mobirise.</p>
+        <p class="text-xs-center">Copyright (c) 2016 CS2102</p>
     </div>
 </footer>
 
