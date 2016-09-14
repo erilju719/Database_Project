@@ -23,22 +23,22 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=test user=postgres passwor
 
         <input type="submit" name="formSubmit" value="Search" >
 </form>
-<?php if(isset($_GET['formSubmit'])) 
+<?php if(isset($_GET['formSubmit']))
 {
 	$query = 'SELECT DISTINCT language FROM book';
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
 	echo "<b>SQL: </b>".$query."<br><br>";
-	
+
 	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t<tr>\n";
     foreach ($line as $col_value) {
         echo "\t\t<td>$col_value</td>\n";
     }
     echo "\t</tr>\n";
-  } 
-	
+  }
+
 	pg_free_result($result);
 }
 ?>
