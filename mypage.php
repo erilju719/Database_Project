@@ -7,29 +7,29 @@
 
 <body>
 
-<!----------------------------PHP--------------------------------->
+<!--Connection-->
 <?php
 $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
 ?>
-<!---------------------------------------------------------------->
+<!--end-->
 
 <div><img align="middle" src="lendstuffplz.png"></div>
 
-<form>
+<form method='post'>
         Username <input type="text" name="myusername" id="myusername">
 		Password <input type="password" name="mypassword" id="mypassword">
 		
 		<input type="submit" name="formSubmit" value="Login">
 </form>
 
-<!----------------------------PHP--------------------------------->
-<?php if(isset($_GET['formSubmit'])) 
+<!--PHP-->
+<?php if(isset($_POST['formSubmit'])) 
 {
-	$myuser = $_GET['myusername'];
-	 $mypass = $_GET['mypassword'];
+	$myuser = $_POST['myusername'];
+	 $mypass = $_POST['mypassword'];
 	 
-	$query = "SELECT thename FROM mytable WHERE theuser ='$myuser' AND thepassword = '$mypass'"; 
+	$query = "SELECT name FROM account WHERE email ='$myuser' AND password = '$mypass'"; 
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());	
 	
 	
@@ -48,8 +48,7 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres pas
 <?php
 pg_close($dbconn);
 ?>
-
-<!---------------------------------------------------------------->
+<!--end-->
 
 </body>
 </html>

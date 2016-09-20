@@ -1,0 +1,49 @@
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+.navbar-brand {
+	font-size: 3em;
+	padding-top: .35em;
+	}
+.navbar-inverse {
+	padding-top: .5em;
+	height: 70px;
+    width: 100%;
+    text-align: center;
+  }
+
+#searchbar {
+	font-size: 2em;
+	height: 45px;
+	width: 300px;
+}
+
+#search-btn {
+	font-size: 1.8em;
+}
+
+body {
+	background-image: url(../../images/jumbo.jpeg);
+	background-size: cover;
+}
+
+.jumbotron {
+	background-color: rgba(0,120,100,0.3);
+}
+
+
+#jumbo-text {
+	color: white;
+}
+
+
+.entry-odd {
+	background-color: rgba(22,149,163,0.6);
+	color: #EBFF00;
+}
+
+.entry-even {
+	background-color: rgba(172,240,242,0.4);
+	color: #EBFF00;
+}
