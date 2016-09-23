@@ -22,3 +22,21 @@ item_id SERIAL REFERENCES item(id),
 bidder_email VARCHAR(128) REFERENCES account(email),
 PRIMARY KEY(item_id, bidder_email)
 );
+
+INSERT INTO account VALUES ('derp12@gmail.com', 'Nils Abraham', 'Never Street 52', 'zxc'); 
+INSERT INTO account VALUES ('erik@gmail.com', 'Erik Ljung', 'Nonexsist Street 52', 'asdf'); 
+INSERT INTO account VALUES ('ilikeme@gmail.com', 'Anna Marten', 'Pewdi Street 52', 'qwert'); 
+INSERT INTO account VALUES ('alfredo@gmail.com', 'John Lidquist', 'Trollol Street 52', 'abc'); 
+INSERT INTO account VALUES ('weirdo@gmail.com', 'Erro Olofson', 'Whaddup Street 52', 'weirdo'); 
+
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Water Bottle', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Table', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Girlfriend'', 'Singapore', 'Excellent', 'TRUE', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Donkey', 'Singapore', 'Excellent', 'TRUE', 'erik@gmail.com');
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Mug', 'Singapore', 'Excellent', 'TRUE', 'erik@gmail.com');
+
+INSERT INTO bid VALUES('Pending', 50, 2, 3, 'erik@gmail.com');
+INSERT INTO bid VALUES('Pending', 55, 2, 3, 'alfredo@gmail.com');
+INSERT INTO bid VALUES('Pending', 25, 3, 1, 'alfredo@gmail.com');
+INSERT INTO bid VALUES('Pending', 25, 3, 4, 'derp12@gmail.com');
+INSERT INTO bid VALUES('Pending', 25, 3, 5, 'derp12@gmail.com');
