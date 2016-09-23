@@ -31,7 +31,7 @@ INSERT INTO account VALUES ('weirdo@gmail.com', 'Erro Olofson', 'Whaddup Street 
 
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Water Bottle', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Table', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
-INSERT INTO item(name, location, condition, availability, owner) VALUES ('Girlfriend'', 'Singapore', 'Excellent', 'TRUE', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Girlfriend', 'Singapore', 'Excellent', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Donkey', 'Singapore', 'Excellent', 'TRUE', 'erik@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Mug', 'Singapore', 'Excellent', 'TRUE', 'erik@gmail.com');
 
