@@ -8,15 +8,15 @@
 
 <h3>Log In Page</h3>
 <?php
-	$dbconn = pg_connect("host=localhost port=5432 dbname=2102Project user=postgres password=postgres")
+	$dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
 	or die('Could not connect: ' . pg_last_error());
 ?>
-	<form>
+	<form method="post">
 		<input type="text" placeholder="Email" name = "user_name"> <br>
 		<input type="password" placeholder="Password" name = "pass"><br>
 		<input type="submit" value = "Sign In" name = "formSubmit"></button>
 	</form>
-<?php if (isset($_GET['formSubmit']))
+<?php if (isset($_POST['formSubmit']))
 	session_start();
 	{
 		$name = $_REQUEST['user_name'];

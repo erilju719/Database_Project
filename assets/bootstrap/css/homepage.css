@@ -1,0 +1,25 @@
+.navbar-brand {
+	font-size: 3em;
+	padding-top: .35em;
+	}
+.navbar-inverse {
+	padding-top: .5em;
+	height: 70px;
+    width: 100%;
+    text-align: center;
+  }
+
+#searchbar {
+	font-size: 2em;
+	height: 45px;
+	width: 300px;
+}
+
+#search-btn {
+	font-size: 1.8em;
+}
+
+body {
+	padding-top: 50px;
+  	padding-bottom: 20px;
+}

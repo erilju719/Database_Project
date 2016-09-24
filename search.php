@@ -1,3 +1,8 @@
+<?php
+// Start the session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -23,7 +28,7 @@
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
-          <a class="navbar-brand" href = "#">Stuffshare</a>
+          <a class="navbar-brand" href = "homepage.php">Stuffshare</a>
           </div>
           <form class="navbar-form" method="post">
             <div class="form-group" id="search-form">
@@ -39,37 +44,57 @@
 
       <!-- Main body -->
   		<div class="jumbotron">
-      		<div class="container" id ="jumbo-text">
+      		<div class="container-fluid" id ="jumbo-text">
       		<h1>Go ahead, search for something!</h1>
       		<p>Your search results will display below.</p>
           </div>
       </div>
-          
+
+      <div class = "container-fluid">    
       <?php if(isset($_POST['formSubmit'])) {
-        $title = $_POST['searched'];
-        $query = "SELECT DISTINCT b.title FROM book b WHERE b.title LIKE '%$title%'";
+        //Query
+        $item = $_POST['searched'];
+        $username = $_SESSION['emailaddress'];
+        $query = "SELECT DISTINCT i.name AS item_name, i.condition AS condition, a.name AS owner_name
+        FROM item i, account a 
+        WHERE i.name LIKE '%$item%' AND i.owner!='$username' AND i.availability";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+        //Display query result
         $count = 0;
         while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-          foreach ($line as $col_value) {
-            echo '<div class="col-md-4">';
-            if ($count % 2 == 0) {
-              echo '<h2 class="entry-odd">';
-              echo "$col_value</h2>";
-            } else {
-              echo '<h2 class="entry-even">';
-              echo "$col_value</h2>";
-            }
-            echo '<a href="bid.php" class="btn btn-info" role="button">Add/modify bid!</a>';
-            echo "</div>";
-            $count++;
-            }
-          } 
-          pg_free_result($result);
-        }
-        ?>
+          if ($count % 2 == 0) {
+            echo "\t<div class='col-md-4' id='line-odd'>\n";
+          } else {
+            echo "\t<div class='col-md-4' id='line-even'>\n";
+          }
+
+          echo "\t\t<div class ='row-fluid'>\n";
+          echo "\t\t\t<div class='col-md-9'>\n";
+
+          echo "\t\t\t\t<h3 class = 'entry-odd'>";
+          echo "Item name: " . $line[item_name] . "</h3>\n";
+
+          echo "\t\t\t\t<h3 class = 'entry-even'>";
+          echo "Condition: " . $line[condition] . "</h3>\n";
+
+          echo "\t\t\t\t<h3 class = 'entry-odd'>";
+          echo "Owner: " . $line[owner_name] . "</h3>\n";
+
+          echo "\t\t\t</div>\n";
+
+          echo "\t\t\t<div class='col-md-3' id = 'bid-col'>\n";
+          echo "\t\t\t\t<a href='bid.php' class='btn btn-info' role='button'>Add bid!</a>\n";
+          echo "\t\t\t</div>\n"; 
+          echo "\t\t</div>\n";
+          echo "\t\t</div>\n";
+          $count++;
+        } 
+      pg_free_result($result);
+      }
+      ?>
 
       <?php pg_close($dbconn); ?> 
-
+      </div>
 </body>
 </html>
