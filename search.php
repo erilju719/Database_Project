@@ -55,14 +55,12 @@ session_start();
         //Query
         $item = $_POST['searched'];
         $username = $_SESSION['emailaddress'];
-        $query = "SELECT DISTINCT i.name AS item_name, i.condition AS condition, a.name AS owner_name
-        FROM item i, account a 
-        WHERE i.name LIKE '%$item%' AND i.owner!='$username' AND i.availability";
+        $query = "SELECT DISTINCT i.name, i.condition, a.name FROM item i, account a WHERE i.name LIKE '%$item%' AND i.owner!='$username' AND i.availability AND a.email=i.owner";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         //Display query result
         $count = 0;
-        while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+        while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
           if ($count % 2 == 0) {
             echo "\t<div class='col-md-4' id='line-odd'>\n";
           } else {
@@ -73,13 +71,13 @@ session_start();
           echo "\t\t\t<div class='col-md-9'>\n";
 
           echo "\t\t\t\t<h3 class = 'entry-odd'>";
-          echo "Item name: " . $line[item_name] . "</h3>\n";
+          echo "Item name: " . $line[0] . "</h3>\n";
 
           echo "\t\t\t\t<h3 class = 'entry-even'>";
-          echo "Condition: " . $line[condition] . "</h3>\n";
+          echo "Condition: " . $line[1] . "</h3>\n";
 
           echo "\t\t\t\t<h3 class = 'entry-odd'>";
-          echo "Owner: " . $line[owner_name] . "</h3>\n";
+          echo "Owner: " . $line[2] . "</h3>\n";
 
           echo "\t\t\t</div>\n";
 
