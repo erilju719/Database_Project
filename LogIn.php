@@ -8,7 +8,10 @@
 
 <h3>Log In Page</h3>
 <?php
-session_start();
+	if(isset($_SESSION)){
+		session_destroy();
+	}
+	session_start();
 	$dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
 	or die('Could not connect: ' . pg_last_error());
 ?>
