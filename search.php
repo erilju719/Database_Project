@@ -46,16 +46,16 @@ session_start();
   		<div class="jumbotron">
       		<div class="container-fluid" id ="jumbo-text">
       		<h1>Go ahead, search for something!</h1>
-      		<p>Your search results will display below.</p>
+      		<p>Your search results are displayed below.</p>
           </div>
       </div>
 
-      <div class = "container-fluid">    
+      <div class = "container-fluid">
       <?php if(isset($_POST['formSubmit'])) {
         //Query
         $item = $_POST['searched'];
         $username = $_SESSION['emailaddress'];
-        $query = "SELECT DISTINCT i.name, i.condition, a.name FROM item i, account a WHERE i.name LIKE '%$item%' AND i.owner!='$username' AND i.availability AND a.email=i.owner";
+        $query = "SELECT DISTINCT i.name, i.condition, a.name FROM item i, account a WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND i.availability AND a.email=i.owner";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         //Display query result
@@ -83,16 +83,16 @@ session_start();
 
           echo "\t\t\t<div class='col-md-3' id = 'bid-col'>\n";
           echo "\t\t\t\t<a href='bid.php' class='btn btn-info' role='button'>Add bid!</a>\n";
-          echo "\t\t\t</div>\n"; 
+          echo "\t\t\t</div>\n";
           echo "\t\t</div>\n";
           echo "\t\t</div>\n";
           $count++;
-        } 
+        }
       pg_free_result($result);
       }
       ?>
 
-      <?php pg_close($dbconn); ?> 
+      <?php pg_close($dbconn); ?>
       </div>
 </body>
 </html>

@@ -14,24 +14,24 @@ INSERT INTO account VALUES ('blender@yahoo.com', 'Blenderdick Crackersprout', 'L
 
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Water Bottle', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Table', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
-INSERT INTO item(name, location, condition, availability, owner) VALUES ('Girlfriend 1', 'Singapore', 'Excellent', 'TRUE', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, availability, owner) VALUES ('Cellphone 1', 'Singapore', 'Excellent', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Donkey', 'Singapore', 'Excellent', 'TRUE', 'erik@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Mug', 'Singapore', 'Excellent', 'TRUE', 'erik@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Water Bottle', 'Singapore', 'dish@hotmail.com'); /*Example of excluding cols with default values */ 
 INSERT INTO item(name, location, owner) VALUES ('Soap', 'Singapore', 'vegemite@gmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Mum', 'Singapore', 'vegemite@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Moose', 'Singapore', 'vegemite@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('HP Envy Laptop', 'Singapore', 'vegemite@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Lawnmower', 'Singapore', 'derp12@gmail.com');
-INSERT INTO item(name, location, condition, owner) VALUES ('Girlfriend 2', 'Singapore', 'Poor', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, owner) VALUES ('Cellphone 2', 'Singapore', 'Poor', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, owner) VALUES ('Lawnmower', 'Singapore', 'Excellent','ilikeme@gmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Girlfriend', 'Singapore', 'ilikeme@gmail.com');
-INSERT INTO item(name, location, condition, owner) VALUES ('Girlfriend', 'Singapore', 'Excellent', 'alfredo@gmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Girlfriend', 'Singapore', 'weirdo@gmail.com');
-INSERT INTO item(name, location, condition, owner) VALUES ('Girlfriend', 'Singapore', 'Poor', 'dish@hotmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Girlfriend', 'Singapore', 'vegemite@gmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Girlfriend', 'Singapore', 'barn@gmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Girlfriend', 'Singapore', 'bomb@gmail.com');
-INSERT INTO item(name, location, owner) VALUES ('Girlfriend', 'Singapore', 'blender@yahoo.com');
+INSERT INTO item(name, location, owner) VALUES ('Table', 'Singapore', 'ilikeme@gmail.com');
+INSERT INTO item(name, location, condition, owner) VALUES ('Cellphone', 'Singapore', 'Excellent', 'alfredo@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Avocado', 'Singapore', 'weirdo@gmail.com');
+INSERT INTO item(name, location, condition, owner) VALUES ('Cat', 'Singapore', 'Poor', 'dish@hotmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Society', 'Singapore', 'vegemite@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'barn@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'bomb@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'blender@yahoo.com');
 
 INSERT INTO bid VALUES('Pending', 50, 2, 3, 'erik@gmail.com');
 INSERT INTO bid VALUES('Pending', 55, 2, 3, 'alfredo@gmail.com');

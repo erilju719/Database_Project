@@ -12,7 +12,7 @@ session_start();
       <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
       <link href="assets/bootstrap/css/homepage.css" rel="stylesheet">
 
-  <title>Stuffshare</title>
+  <title>Stuffshare - Homepage</title>
   <style>
     table {border-collapse: collapse;}
     table, th, td {border: 1px solid black;}
@@ -23,7 +23,8 @@ session_start();
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
-          <a class="navbar-brand" href = "homepage.php">Stuffshare</a>
+          <a class="navbar-brand" href = "homepage.php">Homepage</a>
+          <a class="navbar-brand" href = "addpage.php">Add New Item</a>
           </div>
           <form class="navbar-form" method="post" action = "search.php">
             <div class="form-group" id="search-form">
@@ -38,7 +39,7 @@ session_start();
 
 <table>
 <tr> <td colspan="5" style="background-color:#FFA500; text-align:center;">
-<h1> Ur itemz </h1> </td>
+<h1> Your items </h1> </td>
 </tr>
 
 <tr>
@@ -56,7 +57,7 @@ session_start();
 	$query = "SELECT i.id, i.name, i.location, i.condition, i.availability FROM item i WHERE i.owner = '$usermail'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-  echo "<b>SQL: </b>".$query."<br><br>";
+  //echo "<b>SQL: </b>".$query."<br><br>";
 
 	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "<tr>\n";
@@ -78,7 +79,7 @@ session_start();
 
 <table>
 <tr> <td colspan="4" style="background-color:#FFA500; text-align:center;">
-<h1> Bidz on ur itemz</h1> </td>
+<h1> Bids on your items</h1> </td>
 </tr>
 
 <tr>
@@ -134,7 +135,7 @@ pg_close($dbconn);
             $choice = $_POST['Choice'];
             $query = "UPDATE bid SET status = '$choice' FROM item WHERE bid.item_id = item.id AND item.id = $item_id AND bid.bidder_email = '$bidder_email' AND item.owner = '$usermail'";
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-            header("Refresh:0"); //Uppdatera sidan!
+            header("Refresh:0"); //Update page
             pg_free_result($result);
             pg_close($dbconn);
         }
@@ -144,7 +145,7 @@ pg_close($dbconn);
 
 <table>
 <tr> <td colspan="4" style="background-color:#FFA500; text-align:center;">
-<h1> Ur bidz </h1> </td>
+<h1> Your bids </h1> </td>
 </tr>
 
 <tr>
