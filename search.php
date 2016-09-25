@@ -28,7 +28,8 @@ session_start();
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <div class="navbar-header">
-          <a class="navbar-brand" href = "homepage.php">Stuffshare</a>
+          <a class="navbar-brand" href = "homepage.php">Homepage</a>
+          <a class="navbar-brand" href = "addpage.php">Add New Item</a>
           </div>
           <form class="navbar-form" method="post">
             <div class="form-group" id="search-form">

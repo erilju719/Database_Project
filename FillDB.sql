@@ -9,9 +9,6 @@ INSERT INTO account VALUES ('barn@gmail.com', 'Barnoldswick Crumplehorn', 'LOL S
 INSERT INTO account VALUES ('bomb@gmail.com', 'Bombadil Cottagecheese', 'YOLO Street 25', 'bomb');
 INSERT INTO account VALUES ('blender@yahoo.com', 'Blenderdick Crackersprout', 'LOL Street 20', 'blend');
 
-
-
-
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Water Bottle', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Table', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Cellphone 1', 'Singapore', 'Excellent', 'TRUE', 'derp12@gmail.com');
@@ -29,9 +26,16 @@ INSERT INTO item(name, location, condition, owner) VALUES ('Cellphone', 'Singapo
 INSERT INTO item(name, location, owner) VALUES ('Avocado', 'Singapore', 'weirdo@gmail.com');
 INSERT INTO item(name, location, condition, owner) VALUES ('Cat', 'Singapore', 'Poor', 'dish@hotmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Society', 'Singapore', 'vegemite@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Basketball', 'Singapore', 'vegemite@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'vegemite@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'barn@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Soccer ball', 'Singapore', 'barn@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'bomb@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Ladder', 'Singapore', 'bomb@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Hammer', 'Singapore', 'bomb@gmail.com');
+INSERT INTO item(name, location, owner) VALUES ('Football', 'Singapore', 'bomb@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Cellphone', 'Singapore', 'blender@yahoo.com');
+INSERT INTO item(name, location, owner) VALUES ('Cellphone 2', 'Singapore', 'blender@yahoo.com');
 
 INSERT INTO bid VALUES('Pending', 50, 2, 3, 'erik@gmail.com');
 INSERT INTO bid VALUES('Pending', 55, 2, 3, 'alfredo@gmail.com');
