@@ -56,7 +56,7 @@ session_start();
         //Query
         $item = $_POST['searched'];
         $username = $_SESSION['emailaddress'];
-        $query = "SELECT DISTINCT i.name, i.condition, a.name FROM item i, account a WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND i.availability AND a.email=i.owner";
+        $query = "SELECT DISTINCT i.name, i.condition, i.description, a.name, i.id FROM item i, account a WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND i.availability AND a.email=i.owner";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         //Display query result
@@ -78,12 +78,19 @@ session_start();
           echo "Condition: " . $line[1] . "</h3>\n";
 
           echo "\t\t\t\t<h3 class = 'entry-odd'>";
-          echo "Owner: " . $line[2] . "</h3>\n";
+          if (is_null($line[2])) {
+            echo "Description: None </h3>\n";
+          } else {
+            echo "Description: " . $line[2] . "</h3>\n";
+          }
+          
+          echo "\t\t\t\t<h3 class = 'entry-even'>";
+          echo "Owner: " . $line[3] . "</h3>\n";
 
           echo "\t\t\t</div>\n";
 
           echo "\t\t\t<div class='col-md-3' id = 'bid-col'>\n";
-          echo "\t\t\t\t<a href='bid.php' class='btn btn-info' role='button'>Add bid!</a>\n";
+          echo "\t\t\t\t<a href='bid.php?id=".$line[4]."' class='btn btn-info' role='button'> Add bid!</a>\n";
           echo "\t\t\t</div>\n";
           echo "\t\t</div>\n";
           echo "\t\t</div>\n";
