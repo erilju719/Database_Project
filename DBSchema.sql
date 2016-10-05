@@ -19,8 +19,10 @@ CREATE TABLE bid (
 num SERIAL,
 status VARCHAR(8) DEFAULT 'Pending' CHECK (status = 'Accepted' OR status = 'Pending' OR status = 'Declined'),
 rate NUMERIC CHECK (rate >= 0),
-duration INT NOT NULL,
+startDate DATE NOT NULL,
+endDate DATE NOT NULL,
 item_id SERIAL REFERENCES item(id),
 bidder_email VARCHAR(128) REFERENCES account(email),
-PRIMARY KEY(num, item_id, bidder_email)
+PRIMARY KEY(num, item_id, bidder_email),
+CHECK (endDate > startDate)
 );

@@ -55,23 +55,29 @@ $_SESSION["id"]=$_GET["id"];
                 </div>
 
                 <form id="bidForm" method="post" class="form-horizontal"
-                      data-bv-message="This value is not valid"
                       data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Rate</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="rate" placeholder="Enter Bid Price in SGD" required data-bv-notempty-message="Bid rate is necessary" data-bv-numeric="true" data-bv-numeric-message="Must be numeric" />
+                            <input type="text" class="form-control" name="rate" placeholder="Enter Bid Price in SGD" required data-bv-notempty-message="Bid rate required" data-bv-numeric="true" data-bv-numeric-message="Must be numeric" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Duration</label>
+                        <label class="col-lg-3 control-label">Start Date</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="duration" placeholder="No. of days you wish to borrow item for"
-                                   required data-bv-notempty-message="Duration is required and cannot be empty"
-                                   data-bv-integer="true" data-bv-integer-message="Invalid whole number" />
+                            <input type="text" class="form-control" name="startDate" placeholder="YYYY/MM/DD" required data-bv-notempty-message="Start date required"
+                            data-bv-date="true" data-bv-date-format="YYYY/MM/DD" data-bv-date-message="Invalid date" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">End Date</label>
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" name="endDate" placeholder="YYYY/MM/DD" required data-bv-notempty-message="End date required"
+                            data-bv-date-format="YYYY/MM/DD" data-bv-date="true" data-bv-date-message="Invalid date" />
                         </div>
                     </div>
 
@@ -92,19 +98,27 @@ $_SESSION["id"]=$_GET["id"];
         //Query
         $id = $_SESSION['id'];
         $rate = $_POST['rate'];
-        $duration = $_POST['duration'];
+        $startDate = $_POST['startDate'];
+        $endDate = $_POST['endDate'];
         $username = $_SESSION['emailaddress'];
-        $query = "INSERT INTO bid(rate,duration,item_id,bidder_email) VALUES('$rate','$duration','$id','$username')";
+        $query = "INSERT INTO bid(rate,startDate,endDate,item_id,bidder_email) VALUES('$rate','$startDate','$endDate','$id','$username')";
+
         $result = pg_query($query);
         if ($result) {
             echo '<div class="alert alert-success">
             Bid successfully placed!
             </div>';
         } else {
+            $error = pg_last_error();
+            if (preg_match('/bid_check/i', $error)) {
+                echo '<div class="alert alert-danger">
+                End date must be later than start date
+                </div>';
+            } else {
             echo '<div class="alert alert-danger">
             Please try again.
             </div>';
-            echo pg_last_error();
+            }
         }
         pg_free_result($result);
         }
@@ -114,12 +128,12 @@ $_SESSION["id"]=$_GET["id"];
 
 </body>
 
-
 <script type="text/javascript">
     $(document).ready(function() {
         $('#bidForm').bootstrapValidator();
     });
 </script>
+
 
 </html>
 
