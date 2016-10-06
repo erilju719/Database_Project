@@ -4,18 +4,45 @@ session_start();
 ?>
 
 <html>
-<head> <title>Add item-page</title> </head>
+<head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link href="assets/bootstrap/css/addpage.css" rel="stylesheet">
+    <title>Add item-page</title> 
+</head>
 
 <body>
-<table>
-<tr> <td colspan="2" style="background-color:#008B8B;">
-<h1> <font color=#FFFAF0>Add new item</font></h1>
-</td> </tr>
 
 <?php
 $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
 ?>
+
+<!-- Top navigation bar (black) -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li><a href = "homepage.php" id="barIcon"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href = "addpage.php"  id="barIcon"><span class="glyphicon glyphicon-plus"></span> Add item</a></li>
+            <li><form class="navbar-form" method="post" action = "search.php">
+              <div class="form-group" id="search-form">
+                <input type="text" name = "searched" placeholder="Eg. Lawnmower" class="form-control" id="searchbar">
+              </div>
+              <button type="submit" name = "formSubmit" class="btn btn-primary" id="searchIcon">
+                <span class = "glyphicon glyphicon-search"></span>
+              </button>
+            </form></li>
+            <li><a href = "login.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </div>
+      </nav>
+
+
+<table>
+<tr> <td colspan="2" style="background-color:#008B8B;">
+<h1> <font color=#FFFAF0>Add new item</font></h1>
+</td> </tr>
 
 <tr>
 <td style="background-color:#FFFAF0;">

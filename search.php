@@ -27,19 +27,19 @@ session_start();
       <!-- Top navigation bar (black) -->
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
-          <div class="navbar-header">
-          <a class="navbar-brand" href = "homepage.php">Homepage</a>
-          <a class="navbar-brand" href = "addpage.php">Add New Item</a>
+          <ul class="nav navbar-nav">
+            <li><a href = "homepage.php" id="barIcon"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href = "addpage.php"  id="barIcon"><span class="glyphicon glyphicon-plus"></span> Add item</a></li>
+            <li><form class="navbar-form" method="post" action = "search.php">
+              <div class="form-group" id="search-form">
+                <input type="text" name = "searched" placeholder="Eg. Lawnmower" class="form-control" id="searchbar">
+              </div>
+              <button type="submit" name = "formSubmit" class="btn btn-primary" id="searchIcon">
+                <span class = "glyphicon glyphicon-search"></span>
+              </button>
+            </form></li>
+            <li><a href = "login.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </div>
-          <form class="navbar-form" method="post">
-            <div class="form-group" id="search-form">
-              <input type="text" name = "searched" placeholder="Eg. Lawnmower" class="form-control" id="searchbar">
-            </div>
-            <button type="submit" name = "formSubmit" class="btn btn-primary">
-              <span class = "glyphicon glyphicon-search" id="search-btn"></span>
-            </button>
-          </form>
-        </div>
       </nav>
 
 

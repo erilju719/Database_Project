@@ -25,12 +25,12 @@
 if (isset($_POST['formSubmit'])){
 		$name = $_REQUEST['user_name'];
 		$password=$_REQUEST['pass'];
-		$query = "SELECT * FROM account a WHERE email = '$name' AND password = '$password'";
+		$query = "SELECT a.admin::int FROM account a WHERE email = '$name' AND password = '$password'";
 		$result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());
 		$unique = pg_num_rows($result);
 		if($unique == 1){
-			$adminaccess="SELECT a.admin FROM account a WHERE email = '$name' AND password = '$password'";
 			$_SESSION['emailaddress'] = $name;
+			$adminaccess = pg_fetch_array($result,null,PGSQL_NUM)[0];
 			if($adminaccess){
 				header('Location: /adminpage.php');
 			}

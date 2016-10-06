@@ -2,12 +2,34 @@
 	font-size: 3em;
 	padding-top: .35em;
 	}
+
 .navbar-inverse {
 	padding-top: .5em;
 	height: 70px;
     width: 100%;
     text-align: center;
+    display: inline-block;
   }
+
+.navbar-inverse .nav {
+	float:none;
+}
+
+.navbar-inverse .nav li {
+	float:none;
+	display:inline-block;
+	vertical-align:middle;
+}
+
+.navbar-inverse .nav li a {
+	color: white;
+}
+
+.navbar-inverse .nav li a:hover {
+	background: white;
+	color: black;
+}
+
 
 #searchbar {
 	font-size: 2em;
@@ -15,8 +37,14 @@
 	width: 300px;
 }
 
-#search-btn {
+#barIcon {
+	font-size: 1.6em;
+	font-family: Helvetica, sans-serif;
+}
+
+#searchIcon {
 	font-size: 1.8em;
+	font-family: Helvetica, sans-serif;
 }
 
 body {
