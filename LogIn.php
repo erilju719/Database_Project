@@ -29,8 +29,14 @@ if (isset($_POST['formSubmit'])){
 		$result = pg_query($dbconn, $query) or die('Query failed: ' . pg_last_error());
 		$unique = pg_num_rows($result);
 		if($unique == 1){
+			$adminaccess="SELECT a.admin FROM account a WHERE email = '$name' AND password = '$password'";
 			$_SESSION['emailaddress'] = $name;
-			header('Location: /homepage.php');
+			if($adminaccess){
+				header('Location: /adminpage.php');
+			}
+			else{
+				header('Location: /homepage.php');
+			}
 	    exit;
 		}
 		else{

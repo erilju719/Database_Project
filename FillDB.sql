@@ -8,6 +8,7 @@ INSERT INTO account VALUES ('vegemite@gmail.com', 'Rinkydink Vegemite', 'LOL Str
 INSERT INTO account VALUES ('barn@gmail.com', 'Barnoldswick Crumplehorn', 'LOL Street 21', 'barn');
 INSERT INTO account VALUES ('bomb@gmail.com', 'Bombadil Cottagecheese', 'YOLO Street 25', 'bomb');
 INSERT INTO account VALUES ('blender@yahoo.com', 'Blenderdick Crackersprout', 'LOL Street 20', 'blend');
+INSERT INTO account VALUES ('englishclass@yahoo.com', 'English Class', 'LOL Street 22', '111', 'true');
 
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Water Bottle', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');
 INSERT INTO item(name, location, condition, availability, owner) VALUES ('Table', 'Singapore', 'Good', 'TRUE', 'derp12@gmail.com');

@@ -2,7 +2,8 @@ CREATE TABLE account (
 email VARCHAR(128) PRIMARY KEY,
 name VARCHAR(128) NOT NULL,
 address VARCHAR(128) NOT NULL,
-password VARCHAR(32) NOT NULL
+password VARCHAR(32) NOT NULL,
+admin BOOLEAN DEFAULT 'false'
 );
 
 CREATE TABLE item (
