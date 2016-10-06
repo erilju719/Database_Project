@@ -22,12 +22,16 @@ $_SESSION["id"]=$_GET["id"];
     </head>
 
     <body>
-    <!-- Set up DB connection -->
+    <!-- Set up DB connection, get owner email -->
     <?php
     $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
+    $id = $_SESSION['id'];
+    $query = "SELECT i.owner FROM item i WHERE i.id= '$id'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    $owner = pg_fetch_array($result, null, PGSQL_NUM)[0];
+    $_SESSION["owner"]=$owner;
     ?>
-
       <!-- Top navigation bar (black) -->
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -102,8 +106,15 @@ $_SESSION["id"]=$_GET["id"];
         $startDate = $_POST['startDate'];
         $endDate = $_POST['endDate'];
         $username = $_SESSION['emailaddress'];
-        $query = "INSERT INTO bid(rate,startDate,endDate,item_id,bidder_email) VALUES('$rate','$startDate','$endDate','$id','$username')";
+        $owner = $_SESSION['owner'];
+        if ($owner == $username) {
+            echo "<div class='alert alert-danger'>
+            Can't bid for your own item!
+            </div>";
+            exit();
+        }
 
+        $query = "INSERT INTO bid(rate,startDate,endDate,item_id,bidder_email) VALUES('$rate','$startDate','$endDate','$id','$username')";
         $result = pg_query($query);
         if ($result) {
             echo '<div class="alert alert-success">
