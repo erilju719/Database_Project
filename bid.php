@@ -46,7 +46,7 @@ $_SESSION["id"]=$_GET["id"];
                 <span class = "glyphicon glyphicon-search"></span>
               </button>
             </form></li>
-            <li><a href = "login.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href = "index.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </div>
       </nav>
 
@@ -88,7 +88,7 @@ $_SESSION["id"]=$_GET["id"];
 
                     <div class="form-group">
                         <div class="col-lg-12 col-lg-offset-5">
-                            <button type="submit" class="btn btn-primary" name="formSubmit">Place your bid!</button>
+                            <button type="submit" class="btn btn-success" name="formSubmit">Place your bid!</button>
                         </div>
                     </div>
                 </form>

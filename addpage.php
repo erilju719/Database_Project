@@ -34,7 +34,7 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres pas
                 <span class = "glyphicon glyphicon-search"></span>
               </button>
             </form></li>
-            <li><a href = "login.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href = "index.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </div>
       </nav>
 

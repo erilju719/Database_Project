@@ -38,7 +38,7 @@ session_start();
                 <span class = "glyphicon glyphicon-search"></span>
               </button>
             </form></li>
-            <li><a href = "login.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href = "index.php" id="barIcon"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </div>
       </nav>
 

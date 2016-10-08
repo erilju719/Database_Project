@@ -25,7 +25,7 @@ session_start();
           <div class="navbar-header">
           <a class="navbar-brand" href = "adminpage.php">Homepage</a>
           <a class="navbar-brand" href = "addpage.php">Add New Item</a>
-          <a class = "navbar-brand" href = "login.php">Logout</a>
+          <a class = "navbar-brand" href = "index.php">Logout</a>
           </div>
           <form class="navbar-form" method="post" action = "search.php">
             <div class="form-group" id="search-form">

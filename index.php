@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Stuffshare - Log in</title>
+	<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.css"/>
+        <link href="assets/bootstrap/css/index.css" rel="stylesheet">
+     <title>Stuffshare - Log in</title>
 </head>
 
 <body>
