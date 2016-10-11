@@ -10,9 +10,7 @@
      <title>Stuffshare - Log in</title>
 </head>
 
-<body>
 
-<h3>Log In Page</h3>
 <?php
 	if(isset($_SESSION)){
 		session_destroy();
@@ -21,12 +19,20 @@
 	$dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
 	or die('Could not connect: ' . pg_last_error());
 ?>
-	<form method="post">
-		<input type="text" placeholder="Email" name = "user_name"> <br>
-		<input type="password" placeholder="Password" name = "pass"><br>
-		<input type="submit" value = "Sign In" name = "formSubmit">
-	</form>
-
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h2>Log In Page</h2>
+			<form method="post">
+				<input type="email" placeholder="Email" name = "user_name" id="emailplease"> <br>
+				<input type="password" placeholder="Password" id="un" name = "pass"><br><br>
+				<div>
+					<input class="btn btn-info" type="submit" value = "Sign In" name = "formSubmit">
+					<button type="button" class = "btn btn-info" role="button" href= "bid.php">Register</a>
+				</div>
+			</form>
+		</div>
+	</div>
 <?php
 if (isset($_POST['formSubmit'])){
 		$name = $_REQUEST['user_name'];
