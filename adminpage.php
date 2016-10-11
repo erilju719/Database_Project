@@ -102,7 +102,7 @@ session_start();
 	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t<tr>\n";
     foreach ($line as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
+        echo "\t\t<td style='background-color:#eeeeee;'>$col_value</td>\n";
     }
     echo "\t</tr>\n";
   }
@@ -169,7 +169,7 @@ pg_close($dbconn);
 	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t<tr>\n";
     foreach ($line as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
+        echo "\t\t<td style='background-color:#eeeeee;'>$col_value</td>\n";
     }
     echo "\t</tr>\n";
   }
