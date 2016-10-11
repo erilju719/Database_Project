@@ -11,19 +11,17 @@ id SERIAL PRIMARY KEY,
 name VARCHAR(256) NOT NULL,
 location VARCHAR(512) NOT NULL,
 description VARCHAR(1024) DEFAULT NULL,
-condition VARCHAR(32) DEFAULT 'Good' CHECK(condition = 'Excellent'  OR condition= 'Good' OR condition='Poor' ) ,
-availability BOOLEAN DEFAULT TRUE,
+condition VARCHAR(32) DEFAULT 'Good' CHECK(condition = 'Excellent'  OR condition= 'Good' OR condition='Poor' ),
 owner VARCHAR(128) REFERENCES account(email)
 );
 
 CREATE TABLE bid (
-num SERIAL,
+num SERIAL PRIMARY KEY,
 status VARCHAR(8) DEFAULT 'Pending' CHECK (status = 'Accepted' OR status = 'Pending' OR status = 'Declined'),
 rate NUMERIC CHECK (rate >= 0),
 startDate DATE NOT NULL,
 endDate DATE NOT NULL,
 item_id SERIAL REFERENCES item(id),
 bidder_email VARCHAR(128) REFERENCES account(email),
-PRIMARY KEY(num, item_id, bidder_email),
 CHECK (endDate > startDate)
 );
