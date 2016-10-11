@@ -28,7 +28,7 @@
 				<input type="password" placeholder="Password" id="un" name = "pass"><br><br>
 				<div>
 					<input class="btn btn-info" type="submit" value = "Sign In" name = "formSubmit">
-					<button type="button" class = "btn btn-info" role="button" href= "regpage.php">Register</a>
+					<a class = "btn btn-info" role="button" href= "regpage.php">Register</a>
 				</div>
 			</form>
 		</div>
