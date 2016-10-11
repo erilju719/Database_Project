@@ -24,7 +24,11 @@
 	<form method="post">
 		<input type="text" placeholder="Email" name = "user_name"> <br>
 		<input type="password" placeholder="Password" name = "pass"><br>
+		
+		<div class="form-group">
 		<input type="submit" value = "Sign In" name = "formSubmit">
+		<input type="button" onclick="location.href='regpage.php';" value="Register" />
+
 	</form>
 
 <?php
