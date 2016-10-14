@@ -18,7 +18,7 @@ owner VARCHAR(128) REFERENCES account(email)
 CREATE TABLE bid (
 num SERIAL PRIMARY KEY,
 status VARCHAR(8) DEFAULT 'Pending' CHECK (status = 'Accepted' OR status = 'Pending' OR status = 'Declined'),
-rate NUMERIC CHECK (rate >= 0),
+fee NUMERIC CHECK (fee >= 0),
 startDate DATE NOT NULL,
 endDate DATE NOT NULL,
 item_id SERIAL REFERENCES item(id),
