@@ -55,7 +55,7 @@ session_start();
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.owner, i.name, i.location, i.condition FROM item i";
+	$query = "SELECT i.id, i.owner, i.name, i.location, i.condition FROM item i ORDER BY i.id";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   //echo "<b>SQL: </b>".$query."<br><br>";
@@ -103,7 +103,6 @@ session_start();
 <?php
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
             or die('Could not connect: ' . pg_last_error());
-
   if(isset($_POST['modify'])) {
     $id = $_POST['ID'];
     $owner = $_POST['Owner'];
@@ -111,34 +110,55 @@ session_start();
     $location = $_POST['Location'];
     $condition = $_POST['Condition'];
     
-    $query = "UPDATE item SET owner = '$owner', name = '$name', 
-    location = '$location',
-    condition = '$condition' 
-    FROM item WHERE '$id' = item.id";
-    /*
-    if(!strcmp('$owner', ""))
-      $query .= "i.owner = '$owner', "
-    if(!strcmp('$name', ""))
-      $query .= "i.name = '$name', "
-    if(!strcmp('$location', ""))
-      $query .= "i.location = '$location', "
-    if(!strcmp('$condition', ""))
-      $query .= "i.condition = '$condition' "
-
-    $query .= "FROM item WHERE '$id' = i.id";
+    $query = "UPDATE item i SET ";
+    $comma = false;
+    if('$owner'!=''){
+      $query .= " owner ='$owner'";
+      $comma = true;
+    }
+    if(''!='$name'){
+      if($comma){
+        $query .= ", name = '$name'";
+      }
+      else{
+        $query .= " name = '$name'";
+        $comma = true;
+      }
+    }
+    if(empty('$location')){
+      if($comma){
+        $query .= ", location = '$location'";
+      }
+      else{
+        $query .= " location = '$location' ";
+        $comma = true;
+      }
+    }
+    if(empty('$condition')){
+      if($comma){
+        $query .= ", condition = '$condition'";
+      }
+      else{
+        $query .= " condition = '$condition'";
+      }
+    }
+    $query .= " WHERE i.id = '$id'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    header("Refresh:0"); //Update page
-    */
+    pg_free_result($result);
+    pg_close($dbconn);
+    header("Refresh:1");
   }
 
 
   if(isset($_POST['delete'])) {
     $id = $_POST['ID'];
     $query = "DELETE FROM item WHERE '$id' = item.id";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    pg_free_result($result);
+    pg_close($dbconn);
+    header("Refresh:1");
   }
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-  pg_free_result($result);
-  pg_close($dbconn);
+  
 ?>
 
 <br><br>
@@ -149,7 +169,7 @@ session_start();
 </tr>
 
 <tr>
-  <td style="background-color:#eeeeee;">ID</td>
+  <td style="background-color:#eeeeee;">Bid ID</td>
   <td style="background-color:#eeeeee;">Bidder</td>
   <td style="background-color:#eeeeee;">Name</td>
   <td style="background-color:#eeeeee;">Owner</td>
@@ -160,10 +180,9 @@ session_start();
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
 
-  header("Refresh:0"); //Update page
 
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, b.bidder_email, i.name, i.owner, b.status FROM item i, bid b WHERE i.id=b.item_id ORDER BY i.id;";
+	$query = "SELECT b.num, b.bidder_email, i.name, i.owner, b.status FROM item i, bid b WHERE i.id=b.item_id ORDER BY b.num;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
@@ -180,68 +199,80 @@ session_start();
 ?>
 
 <form method="post">
-        ID: <input type="text" name="ID" id="ID">
+        Bid ID: <input type="text" name="ID" id="ID">
         Bidder: <input type="text" name="Bidder" id="bidder">
         Name: <input type="text" name="Name" id="name">
         Owner: <input type="text" name="Owner" id="owner">
         Status: <input type="text" name="Status" id="status">
-        <!--
-        <input type="radio" name="Choice" id="Accept" value="Accepted">Accept
-        <input type="radio" name="Choice" id="Decline" value="Declined">Decline
-
-        input name used to be BidSumit
-      -->
-        <input type="submit" name="modify" value="Modify" >
+        <input type="submit" name="modify1" value="Modify" >
 </form>
 
 <br>
 <form method="post">
-        ID: <input type="text" name="ID" id="ID">
-        Bidder Email: <input type="text" name="Bidder_Email" id="bidder_email">
-        <input type="submit" name="delete" value="Delete" >
+        Bid Number: <input type="text" name="num" id="num">
+        <input type="submit" name="delete1" value="Delete" >
 </form>
 
 <?php
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
             or die('Could not connect: ' . pg_last_error());
 
-  if(isset($_POST['modify'])) {
+  if(isset($_POST['modify1'])) {
     $id = $_POST['ID'];
     $bidder = $_POST['Bidder'];
     $name = $_POST['Name'];
     $owner = $_POST['Owner'];
     $status = $_POST['Status'];
-    
-    $query = "UPDATE bid SET bidder = '$bidder', name = '$name', 
-    owner = '$owner',
-    status = '$status' 
-    FROM bid WHERE '$id' = bid.item_id";
-    /*
-    if(!strcmp('$owner', ""))
-      $query .= "i.owner = '$owner', "
-    if(!strcmp('$name', ""))
-      $query .= "i.name = '$name', "
-    if(!strcmp('$location', ""))
-      $query .= "i.location = '$location', "
-    if(!strcmp('$condition', ""))
-      $query .= "i.condition = '$condition' "
-
-    $query .= "FROM item WHERE '$id' = i.id";
+    $comma = false;
+    $query = "UPDATE bid SET ";
+    if('$bidder' != ''){
+      $query .= "bidder_email = '$bidder'";
+      $comma = true;
+    }
+    if('$status' != ''){
+      if($comma){
+        $query .= ", status = '$status'";
+      }
+      else{
+        $query .= "status = '$status'";
+        $comma = true;
+      }
+    }
+    $query .= " WHERE num = '$id'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    header("Refresh:0"); //Update page
-    */
+    pg_free_result($result);
+
+    $comma = false;
+    $query = "UPDATE item SET ";
+    if('$name' != ''){
+      $query .= "name = '$name'";
+      $comma = true;
+    }
+    if('$owner' != ''){
+      if($comma){
+        $query .= ", owner = '$owner'";
+      }
+      else{
+        $query .= "owner = '$owner'";
+        $comma = true;
+      }
+    }
+    $query .= " FROM bid b WHERE b.num = '$id' AND b.item_id = item.id";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    pg_free_result($result);
+    pg_close($dbconn);
+    header("Refresh:1");
   }
 
 
-  if(isset($_POST['delete'])) {
-    $id = $_POST['ID'];
-    $bidder_email = $_POST['Bidder_Email'];
-    $query = "DELETE FROM bid WHERE '$id' = bid.item_id AND '$bidder_email' = bid.bidder_email";
+  if(isset($_POST['delete1'])) {
+    $id = $_POST['num'];
+    $query = "DELETE FROM bid WHERE '$id' = bid.num";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    header("Refresh:0");
+    pg_free_result($result);
+    pg_close($dbconn);
   }
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-  header("Refresh:0"); //Update page
-  pg_free_result($result);
-  pg_close($dbconn);
 ?>
 </td> </tr>
 </table>
