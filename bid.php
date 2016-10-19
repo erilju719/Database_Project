@@ -113,25 +113,36 @@ $_SESSION["id"]=$_GET["id"];
             </div>";
             exit();
         }
+		$queryclash = "SELECT * FROM bid WHERE status='Accepted' AND item_id='$id' 
+							AND (endDate>='$startDate' AND endDate<='$endDate') OR (startDate>='$startDate' AND startDate<='$endDate') OR (startDate<='$startDate' AND endDate>='$endDate')";
 
-        $query = "INSERT INTO bid(rate,startDate,endDate,item_id,bidder_email) VALUES('$rate','$startDate','$endDate','$id','$username')";
-        $result = pg_query($query);
-        if ($result) {
-            echo '<div class="alert alert-success">
-            Bid successfully placed!
-            </div>';
-        } else {
-            $error = pg_last_error();
-            if (preg_match('/bid_check/i', $error)) {
-                echo '<div class="alert alert-danger">
-                End date must be later than start date
-                </div>';
-            } else {
-            echo '<div class="alert alert-danger">
-            Please try again.
-            </div>';
-            }
-        }
+					
+		$resultclash = pg_query($queryclash);
+		
+		if(pg_num_rows($resultclash)==0) {			
+			$query = "INSERT INTO bid(rate,startDate,endDate,item_id,bidder_email) VALUES('$rate','$startDate','$endDate','$id','$username')";
+			$result = pg_query($query);
+			if ($result) {
+				echo '<div class="alert alert-success">
+				Bid successfully placed!
+				</div>';
+			} else {
+				$error = pg_last_error();
+				if (preg_match('/bid_check/i', $error)) {
+					echo '<div class="alert alert-danger">
+					End date must be later than start date
+					</div>';
+				} else {
+				echo '<div class="alert alert-danger">
+				Please try again.
+				</div>';
+				}
+			}
+		} else {
+			echo '<div class="alert alert-danger">
+				The item is not availible during this time period.
+				</div>';
+		}
         pg_free_result($result);
         }
         ?>
