@@ -40,22 +40,22 @@ session_start();
 <br><br><br>
 <table>
 <tr> <td colspan="5" style="background-color:#FFA500; text-align:center;">
-<h1> Your items </h1> </td>
+<h1> All Items</h1> </td>
 </tr>
 
 <tr>
   <td style="background-color:#eeeeee;">ID</td>
+  <td style="background-color:#eeeeee;">Owner</td>
   <td style="background-color:#eeeeee;">Name</td>
   <td style="background-color:#eeeeee;">Location</td>
   <td style="background-color:#eeeeee;">Condition</td>
-  <td style="background-color:#eeeeee;">Availability</td>
 </tr>
 
 <?php
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.name, i.location, i.condition, i.availability FROM item i WHERE i.owner = '$usermail'";
+	$query = "SELECT i.id, i.owner, i.name, i.location, i.condition FROM item i";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   //echo "<b>SQL: </b>".$query."<br><br>";
@@ -76,45 +76,6 @@ session_start();
 
 <br><br><br><br>
 
-
-
-<table>
-<tr> <td colspan="4" style="background-color:#FFA500; text-align:center;">
-<h1> Bids on your items</h1> </td>
-</tr>
-
-<tr>
-  <td style="background-color:#eeeeee;">ID</td>
-  <td style="background-color:#eeeeee;">Name</td>
-  <td style="background-color:#eeeeee;">Bidder email</td>
-  <td style="background-color:#eeeeee;">Status</td>
-</tr>
-
-<?php
-  $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
-    or die('Could not connect: ' . pg_last_error());
-  $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.name, b.bidder_email, b.status FROM item i, bid b WHERE i.id = b.item_id AND i.owner = '$usermail'";
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-  //echo "<b>SQL: </b>".$query."<br><br>";
-
-	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($line as $col_value) {
-        echo "\t\t<td style='background-color:#eeeeee;'>$col_value</td>\n";
-    }
-    echo "\t</tr>\n";
-  }
-
-	pg_free_result($result);
-?>
-</td> </tr>
-<?php
-pg_close($dbconn);
-?>
-
-</table>
 
 <br><br>
 
@@ -145,12 +106,13 @@ pg_close($dbconn);
 <br><br>
 
 <table>
-<tr> <td colspan="4" style="background-color:#FFA500; text-align:center;">
-<h1> Your bids </h1> </td>
+<tr> <td colspan="5" style="background-color:#FFA500; text-align:center;">
+<h1> All Bids </h1> </td>
 </tr>
 
 <tr>
   <td style="background-color:#eeeeee;">ID</td>
+  <td style="background-color:#eeeeee;">Bidder</td>
   <td style="background-color:#eeeeee;">Name</td>
   <td style="background-color:#eeeeee;">Owner email</td>
   <td style="background-color:#eeeeee;">Status</td>
@@ -160,27 +122,22 @@ pg_close($dbconn);
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.name, i.owner, b.status FROM item i, bid b WHERE i.id = b.item_id AND b.bidder_email = '$usermail'";
+	$query = "SELECT i.id, b.bidder_email, i.name, i.owner, b.status FROM item i, bid b";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-  ?>
 
-<?php
-	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
+  while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+    echo "<tr>\n";
     foreach ($line as $col_value) {
-        echo "\t\t<td style='background-color:#eeeeee;'>$col_value</td>\n";
+        echo "<td style='background-color:#eeeeee;'>$col_value</td>\n";
     }
-    echo "\t</tr>\n";
+    echo "</tr>\n";
   }
 
-	pg_free_result($result);
+  pg_free_result($result);
+  pg_close($dbconn);
 ?>
 </td> </tr>
-<?php
-pg_close($dbconn);
-?>
-
 </table>
 </body>
 </html>

@@ -56,7 +56,7 @@ session_start();
         //Query
         $item = $_POST['searched'];
         $username = $_SESSION['emailaddress'];
-        $query = "SELECT DISTINCT i.name, i.condition, i.description, a.name, i.id FROM item i, account a WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND i.availability AND a.email=i.owner";
+        $query = "SELECT DISTINCT i.name, i.condition, i.description, a.name, i.id FROM item i, account a WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND a.email=i.owner";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
         //Display query result
