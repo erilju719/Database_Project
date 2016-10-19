@@ -113,13 +113,13 @@ $_SESSION["id"]=$_GET["id"];
             </div>";
             exit();
         }
-		$queryclash = "SELECT * FROM bid WHERE status='Accepted' AND item_id='$id' 
+		$queryclash = "SELECT * FROM bid WHERE status='Accepted' AND item_id='$id'
 							AND (endDate>='$startDate' AND endDate<='$endDate') OR (startDate>='$startDate' AND startDate<='$endDate') OR (startDate<='$startDate' AND endDate>='$endDate')";
 
-					
+
 		$resultclash = pg_query($queryclash);
-		
-		if(pg_num_rows($resultclash)==0) {			
+
+		if(pg_num_rows($resultclash)==0) {
 			$query = "INSERT INTO bid(fee,startDate,endDate,item_id,bidder_email) VALUES('$fee','$startDate','$endDate','$id','$username')";
 			$result = pg_query($query);
 			if ($result) {
@@ -140,7 +140,7 @@ $_SESSION["id"]=$_GET["id"];
 			}
 		} else {
 			echo '<div class="alert alert-danger">
-				The item is not availible during this time period.
+				The item is not available during this time period.
 				</div>';
 		}
         pg_free_result($result);
@@ -159,15 +159,3 @@ $_SESSION["id"]=$_GET["id"];
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

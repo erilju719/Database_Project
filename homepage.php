@@ -109,7 +109,7 @@ session_start();
 <br><br>
 
 <form method="post">
-        ID: <input type="text" name="ID" id="ID">
+        Item ID: <input type="text" name="ID" id="ID">
         Bidder email: <input type="text" name="Bidder_email" id="Bidder_email">
         <input type="radio" name="Choice" id="Accept" value="Accepted">Accept
         <input type="radio" name="Choice" id="Decline" value="Declined">Decline
@@ -122,7 +122,7 @@ session_start();
             $bidder_email = $_POST['Bidder_email'];
             $item_id = $_POST['ID'];
             $choice = $_POST['Choice'];
-            $query = "UPDATE bid SET status = '$choice' FROM item WHERE bid.item_id = item.id AND item.id = $item_id AND bid.bidder_email = '$bidder_email' AND item.owner = '$usermail AND status = 'Pending' ";
+            $query = "UPDATE bid SET status = '$choice' FROM item WHERE bid.item_id = item.id AND item.id = $item_id AND bid.bidder_email = '$bidder_email' AND item.owner = '$usermail' AND status = 'Pending' ";
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             header("Refresh:0"); //Update page
             pg_free_result($result);
