@@ -10,11 +10,11 @@ INSERT INTO account VALUES ('bomb@gmail.com', 'Bombadil Cottagecheese', 'SQL Roa
 INSERT INTO account VALUES ('blender@yahoo.com', 'Blenderstitch Crackersprout', 'Seaside Boulevard 164', 'blend');
 INSERT INTO account VALUES ('englishclass@yahoo.com', 'Language Master', 'Entity Road 9', '111', 'TRUE');
 
-INSERT INTO item(name, location, condition, description, availability, owner) VALUES ('Water Bottle', 'Choa Chu Kang', 'Good', '150ml water bottle', 'TRUE', 'derp12@gmail.com');
-INSERT INTO item(name, location, condition, description, availability, owner) VALUES ('Table', 'Bedok', 'Good', 'wooden table with 4 legs', 'TRUE', 'derp12@gmail.com');
-INSERT INTO item(name, location, condition, description, availability, owner) VALUES ('Cellphone 1', 'Woodlands', 'Excellent', 'Apple Iphone 8 128GB', 'TRUE', 'derp12@gmail.com');
-INSERT INTO item(name, location, condition, description, availability, owner) VALUES ('Donkey', 'Jurong West', 'Excellent', '200kg donkey that can ride dragons',  'TRUE', 'erik@gmail.com');
-INSERT INTO item(name, location, condition, description, availability, owner) VALUES ('Mug', 'Bukit Batok', 'Excellent', 'Self-stirring mug', 'TRUE', 'erik@gmail.com');
+INSERT INTO item(name, location, condition, description, owner) VALUES ('Water Bottle', 'Choa Chu Kang', 'Good', '150ml water bottle', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, description, owner) VALUES ('Table', 'Bedok', 'Good', 'wooden table with 4 legs', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, description, owner) VALUES ('Cellphone 1', 'Woodlands', 'Excellent', 'Apple Iphone 8 128GB', 'derp12@gmail.com');
+INSERT INTO item(name, location, condition, description, owner) VALUES ('Donkey', 'Jurong West', 'Excellent', '200kg donkey that can ride dragons', 'erik@gmail.com');
+INSERT INTO item(name, location, condition, description, owner) VALUES ('Mug', 'Bukit Batok', 'Excellent', 'Self-stirring mug', 'erik@gmail.com');
 INSERT INTO item(name, location, description, owner) VALUES ('Water Bottle', 'Ang Mo Kio', '1.5L water bottle', 'dish@hotmail.com'); /*Example of excluding cols with default values */ 
 INSERT INTO item(name, location, description, owner) VALUES ('Soap', 'Queenstown', 'Soap from Israel', 'vegemite@gmail.com');
 INSERT INTO item(name, location, owner) VALUES ('Moose', 'Punggol', 'vegemite@gmail.com');
