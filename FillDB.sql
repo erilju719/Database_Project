@@ -41,13 +41,13 @@ INSERT INTO item(name, location, owner) VALUES ('Table', 'Pasir Ris', 'blender@y
 INSERT INTO item(name, location, description, condition, owner) VALUES ('Turtle', 'Jurong West', 'My favourite turtle called Bob', 'Excellent', 'blender@yahoo.com');
 INSERT INTO item(name, location, description, condition, owner) VALUES ('Screwdriver', 'Yishun', 'Rusty, but works the way you expect it to work', 'Poor', 'dish@hotmail.com');
 
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(50, '2016-11-29', '2016-12-10', 3, 'erik@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(55, '2016-11-28', '2016-12-20', 2, 'alfredo@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(25, '2016-11-30', '2016-12-05', 1, 'alfredo@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(30, '2016-12-02', '2016-12-08', 1, 'barn@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(70, '2016-12-02', '2016-12-08', 1, 'dish@hotmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(700,'2016-12-02', '2016-12-08', 3, 'ilikeme@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(500,'2016-12-02', '2016-12-08', 7, 'ilikeme@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(25, '2016-12-02', '2016-12-08', 4, 'derp12@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(23, '2016-12-02', '2016-12-08', 5, 'derp12@gmail.com');
-INSERT INTO bid(rate, StartDate, EndDate, item_id, bidder_email) VALUES(23, '2016-12-02', '2016-12-08', 5, 'derp12@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(50, '2016-11-29', '2016-12-10', 3, 'erik@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(55, '2016-11-28', '2016-12-20', 2, 'alfredo@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(25, '2016-11-30', '2016-12-05', 1, 'alfredo@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(30, '2016-12-02', '2016-12-08', 1, 'barn@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(70, '2016-12-02', '2016-12-08', 1, 'dish@hotmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(700,'2016-12-02', '2016-12-08', 3, 'ilikeme@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(500,'2016-12-02', '2016-12-08', 7, 'ilikeme@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(25, '2016-12-02', '2016-12-08', 4, 'derp12@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(23, '2016-12-02', '2016-12-08', 5, 'derp12@gmail.com');
+INSERT INTO bid(fee, StartDate, EndDate, item_id, bidder_email) VALUES(23, '2016-12-02', '2016-12-08', 5, 'derp12@gmail.com');
