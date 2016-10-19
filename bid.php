@@ -64,9 +64,9 @@ $_SESSION["id"]=$_GET["id"];
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
                     <div class="form-group">
-                        <label class="col-lg-3 control-label">Rate</label>
+                        <label class="col-lg-3 control-label">Fee</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="rate" placeholder="Enter Bid Price in SGD" required data-bv-notempty-message="Bid rate required" data-bv-numeric="true" data-bv-numeric-message="Must be numeric" />
+                            <input type="text" class="form-control" name="fee" placeholder="Enter Bid Price in SGD" required data-bv-notempty-message="Bid rate required" data-bv-numeric="true" data-bv-numeric-message="Must be numeric" />
                         </div>
                     </div>
 
@@ -102,7 +102,7 @@ $_SESSION["id"]=$_GET["id"];
       <?php if(isset($_POST["formSubmit"])) {
         //Query
         $id = $_SESSION['id'];
-        $rate = $_POST['rate'];
+        $fee = $_POST['fee'];
         $startDate = $_POST['startDate'];
         $endDate = $_POST['endDate'];
         $username = $_SESSION['emailaddress'];
@@ -120,7 +120,7 @@ $_SESSION["id"]=$_GET["id"];
 		$resultclash = pg_query($queryclash);
 		
 		if(pg_num_rows($resultclash)==0) {			
-			$query = "INSERT INTO bid(rate,startDate,endDate,item_id,bidder_email) VALUES('$rate','$startDate','$endDate','$id','$username')";
+			$query = "INSERT INTO bid(fee,startDate,endDate,item_id,bidder_email) VALUES('$fee','$startDate','$endDate','$id','$username')";
 			$result = pg_query($query);
 			if ($result) {
 				echo '<div class="alert alert-success">
