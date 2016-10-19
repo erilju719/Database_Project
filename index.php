@@ -8,6 +8,11 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrapValidator.css"/>
         <link href="assets/bootstrap/css/index.css" rel="stylesheet">
      <title>Stuffshare - Log in</title>
+
+    <script type="text/javascript" src="assets/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrapValidator.js"></script>
+
 </head>
 
 
@@ -20,6 +25,7 @@
 	or die('Could not connect: ' . pg_last_error());
 ?>
 <body>
+	
 	<div class="container">
 		<div class="jumbotron">
 			<h2>Log In Page</h2>
@@ -33,6 +39,8 @@
 			</form>
 		</div>
 	</div>
+
+
 <?php
 if (isset($_POST['formSubmit'])){
 		$name = $_REQUEST['user_name'];

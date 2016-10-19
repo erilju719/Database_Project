@@ -15,7 +15,7 @@ session_start();
   <title>Stuffshare - Homepage</title>
   <style>
     table {border-collapse: collapse;}
-    table, th, td {border: 1px solid black;}
+    table, th, td {border: 1px solid black;}  
 </style>
 </head>
 <body>
@@ -39,7 +39,7 @@ session_start();
 
 <br><br><br>
 <table>
-<tr> <td colspan="5" style="background-color:#FFA500; text-align:center;">
+<tr> <td colspan="4" style="background-color:#FFA500; text-align:center;">
 <h1> Your items </h1> </td>
 </tr>
 
@@ -48,14 +48,13 @@ session_start();
   <td style="background-color:#eeeeee;">Name</td>
   <td style="background-color:#eeeeee;">Location</td>
   <td style="background-color:#eeeeee;">Condition</td>
-  <td style="background-color:#eeeeee;">Availability</td>
 </tr>
 
 <?php
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.name, i.location, i.condition, i.availability FROM item i WHERE i.owner = '$usermail'";
+	$query = "SELECT i.id, i.name, i.location, i.condition FROM item i WHERE i.owner = '$usermail'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   //echo "<b>SQL: </b>".$query."<br><br>";
