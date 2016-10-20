@@ -35,11 +35,11 @@ session_start();
   </nav>
 
   <div class="jumbotron">
-  <table class = "table table-inverse">
-    <h1> Your items </h1>
+  <table class = "table table-striped">
+    <h2>Your items</h2>
     <thead>
-      <tr>
-        <th>ID</th>
+      <tr class ="info">
+        <th>Item ID</th>
         <th>Name</th>
         <th>Location</th>
         <th>Description</th>
@@ -66,108 +66,139 @@ session_start();
     }
 	pg_free_result($result);
   ?>
+  </tbody>
   </table>
 
 
 <br><br>
 
 
-<table class = "table table-inverse">
-  <h1> Bids on your items </h1>
+<table class = "table table-striped">
+  <h2>Bids on your items</h2>
   <thead>
-    <tr>
+    <tr class = "info">
       <th>Item ID</th>
-      <th>Name</th>
+      <th>Item Name</th>
       <th>Bidder Email</th>
-      <th>Status</th>
+      <th>Fee</th>
       <th>Start Date</th>
       <th>End Date</th>
+      <th>Status</th>
+      <th>Accept / Decline bid</th>
     </tr>
   </thead>
 
   <tbody>
   <?php
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.name, b.bidder_email, b.status, b.startDate, b.endDate FROM item i, bid b WHERE i.id = b.item_id AND i.owner = '$usermail'";
+	$query = "SELECT b.id, i.id, i.name, b.bidder_email, b.fee, b.startDate, b.endDate, b.status FROM item i, bid b WHERE i.id = b.item_id AND i.owner = '$usermail'";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   //echo "<b>SQL: </b>".$query."<br><br>";
 
-	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($line as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
+	while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
+    $status = $line[7];
+    
+    if($status=="Accepted"){
+      echo "\t<tr class='success'>\n";
+    } elseif($status=="Declined"){
+      echo "\t<tr class='danger'>\n";
+    } else {
+      echo "\t<tr class='warning'>\n";
+    }
+
+    for ($x=1;$x<=7;$x++) {
+      echo "\t\t<td>".$line[$x]."</td>\n";
+    }
+    if($status == "Pending"){
+      echo "<td>\n";
+      echo "\t<form method='post'>\n";
+      echo "\t\t<input type='hidden' name='Bidder_email' id='Bidder_email' value=".$line[3].">\n";
+      echo "\t\t<input type='hidden' name='bid_id' id='bid_id' value=".$line[0].">\n"; 
+      echo "\t\t<button type='submit' name='BidSubmit' value='Accepted' class='btn btn-success'>Accept</button>\n";
+      echo "\t<button type='submit' name='BidSubmit' value='Declined' class='btn btn-warning'>Decline</button>\n";
+      echo "\t</form>\n";
+      echo "</td>";
     }
     echo "\t</tr>\n";
-  }
+    }
 
 	pg_free_result($result);
-?>
-</tbody>
-</table>
+  ?>
+  </tbody>
+  </table>
 
-<br><br>
-
-<form method="post">
-        Item ID: <input type="text" name="ID" id="ID">
-        Bidder email: <input type="text" name="Bidder_email" id="Bidder_email">
-        <input type="radio" name="Choice" id="Accept" value="Accepted">Accept
-        <input type="radio" name="Choice" id="Decline" value="Declined">Decline
-        <input type="submit" name="BidSubmit" value="Accept" >
-</form>
-
-<?php
+  <?php
         if(isset($_POST['BidSubmit'])) {
             $usermail = $_SESSION['emailaddress'];
             $bidder_email = $_POST['Bidder_email'];
-            $item_id = $_POST['ID'];
-            $choice = $_POST['Choice'];
-            $query = "UPDATE bid SET status = '$choice' FROM item WHERE bid.item_id = item.id AND item.id = $item_id AND bid.bidder_email = '$bidder_email' AND item.owner = '$usermail' AND status = 'Pending' ";
+            $bid_id = $_POST['bid_id'];
+            $choice = $_POST['BidSubmit'];
+            $query = "UPDATE bid SET status = '$choice' FROM item WHERE bid.item_id = item.id AND bid.id = '$bid_id' AND bid.bidder_email = '$bidder_email' AND item.owner = '$usermail'";
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
+            if($choice=='Accepted') {
+              $getDatesQuery = "SELECT item_id, startDate, endDate FROM bid WHERE bid.id = '$bid_id'";
+              $result = pg_query($getDatesQuery);
+              $line = pg_fetch_array($result, null, PGSQL_NUM);
+              $item_id = $line[0];
+              $startDate = $line[1];
+              $endDate = $line[2];
+
+              $autoDeclineQuery = "UPDATE bid SET status = 'Declined' WHERE 
+              bid.item_id = '$item_id' AND bid.id<>'$bid_id' AND
+              ((bid.endDate>='$startDate' AND bid.endDate<='$endDate') OR 
+              (bid.startDate>='$startDate' AND bid.startDate<='$endDate') OR 
+              (bid.startDate<='$startDate' AND bid.endDate>='$endDate'))";
+            }
+            pg_query($autoDeclineQuery);
             header("Refresh:0"); //Update page
             pg_free_result($result);
         }
-?>
+        ?>
 
-<br><br>
+  <br><br>
 
-<table class="table table-inverse">
-<h1> Your bids </h1>
-<thead>
-    <tr>
-    <th>Item ID</th>
-    <th>Bid ID</th>
-    <th>Item Name</th>
-    <th>Start Date</th>
-    <th>End Date</th>
-    <th>Owner Email</th>
-    <th>Status</th>
-    </tr>
+    <table class="table table-striped">
+    <h2>Your bids</h2>
+    <thead>
+        <tr class="info">
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Owner Email</th>
+            <th>Fee</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
 
-<tbody>
-<?php
-  $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, b.num, i.name, b.startDate, b.endDate, i.owner, b.status FROM item i, bid b WHERE i.id = b.item_id AND b.bidder_email = '$usermail'";
-  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
-  ?>
-
-<?php
-	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "\t<tr>\n";
-    foreach ($line as $col_value) {
-        echo "\t\t<td>$col_value</td>\n";
-    }
-    echo "\t</tr>\n";
-  }
-
-	pg_free_result($result);
-?>
-</tbody>
+    <tbody>
+    <?php
+      $usermail = $_SESSION['emailaddress'];
+      $query = "SELECT i.id, i.name, i.description, i.owner, b.fee, b.startDate, b.endDate, b.status FROM bid b,item i WHERE b.bidder_email = '$usermail' AND b.item_id=i.id";
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+        if($line['status']=="Accepted") {
+          echo "\t<tr class='success'>\n";
+        } elseif($status=="Declined") {
+          echo "\t<tr class='danger'>\n";
+        } else {
+          echo "\t<tr class='warning'>\n";
+        }
+        foreach ($line as $col_value) {
+          echo "\t\t<td>$col_value</td>\n";
+        }
+        echo "\t</tr>\n";
+      }
+      pg_free_result($result);
+      ?>
+      </tbody>
+   </table>
+</div>
 <?php
 pg_close($dbconn);
 ?>
-
-</table>
 </body>
 </html>
