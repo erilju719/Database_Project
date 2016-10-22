@@ -44,7 +44,6 @@
 
 #searchIcon {
 	font-size: 1.8em;
-	font-family: Helvetica, sans-serif;
 }
 
 body {
@@ -52,4 +51,13 @@ body {
 	background-size: cover;
 	padding-top: 50px;
   	padding-bottom: 20px;
+}
+
+.jumbotron {
+	background-color: rgba(0,120,100,0.3);
+}
+
+
+#jumbo-text {
+	color: white;
 }
