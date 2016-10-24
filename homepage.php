@@ -8,7 +8,7 @@ session_start();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="5" >
+    <meta http-equiv="refresh" content="20">
 
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="assets/bootstrap/css/homepage.css" rel="stylesheet">
@@ -150,6 +150,7 @@ session_start();
         <th>Location</th>
         <th>Description</th>
         <th>Condition</th>
+        <th>Edit / Modify bid</th>
       </tr>
     </thead>
 
@@ -161,14 +162,23 @@ session_start();
         $query = "SELECT i.id, i.name, i.location, i.description, i.condition FROM item i WHERE i.owner = '$usermail'";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
-    //echo "<b>SQL: </b>".$query."<br><br>";
-
-	 while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+	 while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
       echo "<tr class='warning'>\n";
       foreach ($line as $col_value) {
         echo "<td>$col_value</td>\n";
         }
-      echo "</tr>\n";
+
+      echo "<td>\n";
+      //Edit Item Button
+      echo "\t<form method='post' action='modItem.php'>\n";
+      echo "\t\t<input type='hidden' name='item_id' id='item_id' value=".$line[0].">\n";
+      echo "\t\t<button type='submit' name='ItemSubmit' value='Edit' class='btn btn-warning'>Edit Item</button>\n";
+
+      //Delete Item Button
+      echo "\t\t<input type='hidden' name='item_id' id='item_id' value=".$line[0].">\n";
+      echo "\t<button type='submit' name='ItemSubmit' value='Delete' class='btn btn-danger'>Delete Item</button>\n";
+      echo "\t</form>\n";
+      echo "</td>";
     }
 	pg_free_result($result);
   ?>
@@ -271,23 +281,26 @@ session_start();
     <thead>
         <tr class="info">
             <th>Item ID</th>
+            <th>Bid ID</th>
             <th>Item Name</th>
             <th>Description</th>
+            <th>Condition</th>
             <th>Owner Email</th>
             <th>Fee</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Status</th>
+            <th>Delete Bid</th>
         </tr>
     </thead>
 
     <tbody>
     <?php
       $usermail = $_SESSION['emailaddress'];
-      $query = "SELECT i.id, i.name, i.description, i.owner, b.fee, b.startDate, b.endDate, b.status FROM bid b,item i WHERE b.bidder_email = '$usermail' AND b.item_id=i.id";
+      $query = "SELECT i.id AS itemID, b.id AS bidID, i.name, i.description, i.condition, i.owner, b.fee, b.startDate, b.endDate, b.status FROM bid b,item i WHERE b.bidder_email = '$usermail' AND b.item_id=i.id";
       $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-      while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-        $status = $line['status'];
+      while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
+        $status = $line[9];
         if($status=="Accepted") {
           echo "\t<tr class='success'>\n";
         } elseif($status=="Declined") {
@@ -298,12 +311,33 @@ session_start();
         foreach ($line as $col_value) {
           echo "\t\t<td>$col_value</td>\n";
         }
+        if($status="Pending") {
+          echo "\t\t<td>\n";
+          echo "\t<form method='post'>\n";
+          echo "\t\t<input type='hidden' name='bid_id' id='bid_id' value=".$line[1].">\n";
+          echo "\t\t<button type='submit' name='deleteBid' class='btn btn-danger'>";
+          echo "Delete Bid</button>\n";
+          echo "\t\t</form>\n";
+          echo "\t\t</td>\n";
+        }
         echo "\t</tr>\n";
       }
       pg_free_result($result);
       ?>
       </tbody>
-   </table>
+  </table>
+
+  <?php
+        if(isset($_POST['deleteBid'])) {
+            $bid_id = $_POST['bid_id'];
+            $query = "DELETE FROM bid WHERE bid.id = '$bid_id'";
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+            echo '<div class="alert alert-success">
+            Bid successfully deleted! Page will automatically refresh in a moment.
+            </div>';
+            pg_free_result($result);
+        }
+  ?>
 </div>
 
 <?php
