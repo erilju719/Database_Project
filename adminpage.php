@@ -39,7 +39,7 @@ session_start();
       </nav>
 <br><br><br>
 <table>
-<tr> <td colspan="5" style="background-color:#FFA500; text-align:center;">
+<tr> <td colspan="6" style="background-color:#FFA500; text-align:center;">
 <h1> All Items</h1> </td>
 </tr>
 
@@ -49,6 +49,7 @@ session_start();
   <td style="background-color:#eeeeee;">Name</td>
   <td style="background-color:#eeeeee;">Location</td>
   <td style="background-color:#eeeeee;">Condition</td>
+  <td style="background-color:#eeeeee;">Delete</td>
 </tr>
 
 <?php
@@ -60,24 +61,36 @@ session_start();
 
   //echo "<b>SQL: </b>".$query."<br><br>";
 
-	while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-    echo "<tr>\n";
+	while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
+    echo "<tr class ='warning'>\n";
     foreach ($line as $col_value) {
         echo "<td style='background-color:#eeeeee;'>$col_value</td>\n";
     }
+    echo "\t\t<td style='background-color:#eeeeee;'>\n";
+    echo "\t<form method='post'>\n";
+    echo "\t\t<input type='hidden' name='yoon' id='yoon' value=".$line[0].">\n";
+    echo "\t\t<button type='submit' name='deleteItem' class='btn btn-danger'>";
+    echo "Delete Item</button>\n";
+    echo "\t\t</form>\n";
+    echo "\t\t</td>\n";
     echo "</tr>\n";
   }
-
+  if(isset($_POST['deleteItem'])) {
+    $x = $_POST['yoon'];
+    $query = "DELETE FROM item WHERE item.id = '$x'";
+    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    echo '<div class="alert alert-success">
+    Item successfully deleted! Page will automatically refresh in a moment.
+    </div>';
+    pg_free_result($result);
+  }
 	pg_free_result($result);
   pg_close($dbconn);
 ?>
 </table>
 
 
-<br><br><br><br>
-
-
-<br><br>
+<br>
 
 <form method="post">
         ID: <input type="text" name="ID" id="ID">
@@ -94,11 +107,7 @@ session_start();
         <input type="submit" name="modify" value="Modify" >
 </form>
 
-<br>
-<form method="post">
-        ID: <input type="text" name="ID" id="ID">
-        <input type="submit" name="delete" value="Delete" >
-</form>
+<br><br><br>
 
 <?php
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
@@ -147,24 +156,13 @@ session_start();
     pg_free_result($result);
     pg_close($dbconn);
     header("Refresh:1");
-  }
-
-
-  if(isset($_POST['delete'])) {
-    $id = $_POST['ID'];
-    $query = "DELETE FROM item WHERE '$id' = item.id";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    pg_free_result($result);
-    pg_close($dbconn);
-    header("Refresh:1");
-  }
-  
+  }  
 ?>
 
 <br><br>
 
 <table>
-<tr> <td colspan="5" style="background-color:#FFA500; text-align:center;">
+<tr> <td colspan="6" style="background-color:#FFA500; text-align:center;">
 <h1> All Bids </h1> </td>
 </tr>
 
@@ -174,6 +172,7 @@ session_start();
   <td style="background-color:#eeeeee;">Name</td>
   <td style="background-color:#eeeeee;">Owner</td>
   <td style="background-color:#eeeeee;">Status</td>
+  <td style="background-color:#eeeeee;">Delete</td>
 </tr>
 
 <?php
@@ -182,21 +181,40 @@ session_start();
 
 
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT b.num, b.bidder_email, i.name, i.owner, b.status FROM item i, bid b WHERE i.id=b.item_id ORDER BY b.num;";
+	$query = "SELECT b.id, b.bidder_email, i.name, i.owner, b.status FROM item i, bid b WHERE i.id=b.item_id ORDER BY b.id;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
-  while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+  while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
     echo "<tr>\n";
     foreach ($line as $col_value) {
         echo "<td style='background-color:#eeeeee;'>$col_value</td>\n";
     }
+    echo "\t\t<td style='background-color:#eeeeee;'>\n";
+    echo "\t<form method='post'>\n";
+    echo "\t\t<input type='hidden' name='bid_id' id='bid_id' value=".$line[0].">\n";
+    echo "\t\t<button type='submit' name='deleteBid' class='btn btn-danger'>";
+    echo "Delete Bid</button>\n";
+    echo "\t\t</form>\n";
+    echo "\t\t</td>\n";
     echo "</tr>\n";
+    echo "</tr>\n";
+  }
+  if(isset($_POST['deleteBid'])) {
+      $bid_id = $_POST['bid_id'];
+      $query = "DELETE FROM bid WHERE bid.id = '$bid_id'";
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      echo '<div class="alert alert-success">
+      Bid successfully deleted! Page will automatically refresh in a moment.
+      </div>';
+      pg_free_result($result);
   }
 
   pg_free_result($result);
   pg_close($dbconn);
 ?>
+
+
 
 <form method="post">
         Bid ID: <input type="text" name="ID" id="ID">
@@ -208,10 +226,7 @@ session_start();
 </form>
 
 <br>
-<form method="post">
-        Bid Number: <input type="text" name="num" id="num">
-        <input type="submit" name="delete1" value="Delete" >
-</form>
+
 
 <?php
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
@@ -238,7 +253,7 @@ session_start();
         $comma = true;
       }
     }
-    $query .= " WHERE num = '$id'";
+    $query .= " WHERE id = '$id'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     pg_free_result($result);
 
@@ -257,21 +272,11 @@ session_start();
         $comma = true;
       }
     }
-    $query .= " FROM bid b WHERE b.num = '$id' AND b.item_id = item.id";
+    $query .= " FROM bid b WHERE b.id = '$id' AND b.item_id = item.id";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     pg_free_result($result);
     pg_close($dbconn);
     header("Refresh:1");
-  }
-
-
-  if(isset($_POST['delete1'])) {
-    $id = $_POST['num'];
-    $query = "DELETE FROM bid WHERE '$id' = bid.num";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    header("Refresh:0");
-    pg_free_result($result);
-    pg_close($dbconn);
   }
 ?>
 </td> </tr>
