@@ -33,7 +33,7 @@ $_SESSION["id"]=$_GET["id"];
     $_SESSION["owner"]=$owner;
     ?>
       <!-- Top navigation bar (black) -->
-      <nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
             <li><a href = "homepage.php" id="barIcon"><span class="glyphicon glyphicon-home"></span> Home</a></li>
@@ -41,7 +41,7 @@ $_SESSION["id"]=$_GET["id"];
             <li><form class="navbar-form" method="post" action = "search.php">
               
               <div class="form-group" id="search-form">
-                <input type="text" name = "searched" placeholder="Eg. Lawnmower" class="form-control" id="searchbar">
+                <input type="text" name = "searched" placeholder="Eg. Shirt" class="form-control" id="searchbar">
               </div>
 
               <div class= "btn-group">

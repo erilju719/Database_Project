@@ -33,7 +33,7 @@ session_start();
             <li><form class="navbar-form" method="post" action = "search.php">
               
               <div class="form-group" id="search-form">
-                <input type="text" name = "searched" placeholder="Eg. Lawnmower" class="form-control" id="searchbar">
+                <input type="text" name = "searched" placeholder="Eg. Shirt" class="form-control" id="searchbar">
               </div>
 
               <div class= "btn-group">

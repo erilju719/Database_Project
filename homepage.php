@@ -28,7 +28,7 @@ session_start();
             <li><form class="navbar-form" method="post" action = "search.php">
               
               <div class="form-group" id="search-form">
-                <input type="text" name = "searched" placeholder="Eg. Lawnmower" class="form-control" id="searchbar">
+                <input type="text" name = "searched" placeholder="Eg. Shirt" class="form-control" id="searchbar">
               </div>
 
               <div class= "btn-group">
@@ -159,7 +159,7 @@ session_start();
       $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
         or die('Could not connect: ' . pg_last_error());
         $usermail = $_SESSION['emailaddress'];
-        $query = "SELECT i.id, i.name, i.location, i.description, i.condition FROM item i WHERE i.owner = '$usermail'";
+        $query = "SELECT i.id, i.name, i.location, i.description, i.condition FROM item i WHERE i.owner = '$usermail' AND i.deleted='FALSE'";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 	 while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
@@ -173,12 +173,25 @@ session_start();
       echo "\t<form method='post' action='modItem.php'>\n";
       echo "\t\t<input type='hidden' name='item_id' id='item_id' value=".$line[0].">\n";
       echo "\t\t<button type='submit' name='ItemSubmit' value='Edit' class='btn btn-warning'>Edit Item</button>\n";
-
+      echo "\t</form>\n";
       //Delete Item Button
-      echo "\t<button type='submit' name='ItemSubmit' value='Delete' class='btn btn-danger disabled'>Delete Item</button>\n";
+      echo "\t<form method='post'>\n";
+      echo "\t\t<input type='hidden' name='item_id' id='item_id' value=".$line[0].">\n";
+      echo "\t<button type='submit' name='deleteItem' value='Delete' class='btn btn-danger'>Delete Item</button>\n";
       echo "\t</form>\n";
       echo "</td>";
     }
+      if(isset($_POST['deleteItem'])) {
+            $item_id = $_POST['item_id'];
+            $query =  "UPDATE item SET deleted='TRUE' WHERE id = '$item_id'";
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+            echo '<div class="alert alert-success">
+            Item successfully deleted! Page will automatically refresh in a moment.
+            </div>';
+
+            $query2 = "UPDATE bid SET status = 'Declined' WHERE bid.item_id = '$item_id' AND status = 'Pending'";
+            $result = pg_query($query2) or die('Query failed: ' . pg_last_error());
+      }
 	pg_free_result($result);
   ?>
   </tbody>
@@ -310,7 +323,7 @@ session_start();
         foreach ($line as $col_value) {
           echo "\t\t<td>$col_value</td>\n";
         }
-        if($status="Pending") {
+        if($status=="Pending") {
           echo "\t\t<td>\n";
           echo "\t<form method='post'>\n";
           echo "\t\t<input type='hidden' name='bid_id' id='bid_id' value=".$line[1].">\n";
