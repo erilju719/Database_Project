@@ -173,7 +173,7 @@ session_start();
         $username = $_SESSION['emailaddress'];
         $query = "SELECT DISTINCT i.name, i.condition, i.description, a.name, i.id 
                   FROM item i, account a 
-                  WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND a.email=i.owner";
+                  WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND a.email=i.owner AND i.deleted='FALSE'";
         $query .= $locationQuery;
         $query .= $conditionQuery;
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
