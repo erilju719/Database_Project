@@ -8,6 +8,7 @@ session_start();
     <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!--<meta http-equiv="refresh" content="20">-->
 
       <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
       <link href="assets/bootstrap/css/homepage.css" rel="stylesheet">
@@ -98,12 +99,6 @@ session_start();
         Name: <input type="text" name="Name" id="name">
         Location: <input type="text" name="Location" id="location">
         Condition: <input type="text" name="Condition" id="condition">
-        <!--
-        <input type="radio" name="Choice" id="Accept" value="Accepted">Accept
-        <input type="radio" name="Choice" id="Decline" value="Declined">Decline
-
-        input name used to be BidSumit
-      -->
         <input type="submit" name="modify" value="Modify" >
 </form>
 
@@ -121,11 +116,11 @@ session_start();
     
     $query = "UPDATE item i SET ";
     $comma = false;
-    if('$owner'!=''){
+    if(!empty($owner)){
       $query .= " owner ='$owner'";
       $comma = true;
     }
-    if(''!='$name'){
+    if(!empty($name)){
       if($comma){
         $query .= ", name = '$name'";
       }
@@ -134,7 +129,7 @@ session_start();
         $comma = true;
       }
     }
-    if(empty('$location')){
+    if(!empty($location)){
       if($comma){
         $query .= ", location = '$location'";
       }
@@ -143,7 +138,7 @@ session_start();
         $comma = true;
       }
     }
-    if(empty('$condition')){
+    if(!empty($condition)){
       if($comma){
         $query .= ", condition = '$condition'";
       }
@@ -240,11 +235,11 @@ session_start();
     $status = $_POST['Status'];
     $comma = false;
     $query = "UPDATE bid SET ";
-    if('$bidder' != ''){
+    if(!empty($bidder)){
       $query .= "bidder_email = '$bidder'";
       $comma = true;
     }
-    if('$status' != ''){
+    if(!empty($status)){
       if($comma){
         $query .= ", status = '$status'";
       }
@@ -259,11 +254,11 @@ session_start();
 
     $comma = false;
     $query = "UPDATE item SET ";
-    if('$name' != ''){
+    if(!empty($name)){
       $query .= "name = '$name'";
       $comma = true;
     }
-    if('$owner' != ''){
+    if(!empty($owner)){
       if($comma){
         $query .= ", owner = '$owner'";
       }
