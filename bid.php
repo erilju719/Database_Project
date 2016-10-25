@@ -176,7 +176,7 @@ $_SESSION["id"]=$_GET["id"];
                     <div class="form-group">
                         <label class="col-lg-3 control-label">Start Date</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="startDate" placeholder="YYYY/MM/DD" required data-bv-notempty-message="Start date required"
+                            <input type="date" class="form-control" name="startDate" required data-bv-notempty-message="Start date required"
                             data-bv-date="true" data-bv-date-format="YYYY/MM/DD" data-bv-date-message="Invalid date" />
                         </div>
                     </div>
@@ -184,7 +184,7 @@ $_SESSION["id"]=$_GET["id"];
                     <div class="form-group">
                         <label class="col-lg-3 control-label">End Date</label>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="endDate" placeholder="YYYY/MM/DD" required data-bv-notempty-message="End date required"
+                            <input type="date" class="form-control" name="endDate" required data-bv-notempty-message="End date required"
                             data-bv-date-format="YYYY/MM/DD" data-bv-date="true" data-bv-date-message="Invalid date" />
                         </div>
                     </div>
