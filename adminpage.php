@@ -39,10 +39,12 @@ session_start();
         </div>
       </nav>
 <br><br><br>
+
 <table>
 <tr> <td colspan="6" style="background-color:#FFA500; text-align:center;">
 <h1> All Items</h1> </td>
 </tr>
+
 
 <tr>
   <td style="background-color:#eeeeee;">ID</td>
@@ -157,7 +159,7 @@ session_start();
 <br><br>
 
 <table>
-<tr> <td colspan="6" style="background-color:#FFA500; text-align:center;">
+<tr> <td colspan="8" style="background-color:#FFA500; text-align:center;">
 <h1> All Bids </h1> </td>
 </tr>
 
@@ -165,6 +167,8 @@ session_start();
   <td style="background-color:#eeeeee;">Bid ID</td>
   <td style="background-color:#eeeeee;">Bidder</td>
   <td style="background-color:#eeeeee;">Name</td>
+  <td style="background-color:#eeeeee;">Start Date</td>
+  <td style="background-color:#eeeeee;">End Date</td>  
   <td style="background-color:#eeeeee;">Owner</td>
   <td style="background-color:#eeeeee;">Status</td>
   <td style="background-color:#eeeeee;">Delete</td>
@@ -176,7 +180,7 @@ session_start();
 
 
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT b.id, b.bidder_email, i.name, i.owner, b.status FROM item i, bid b WHERE i.id=b.item_id ORDER BY b.id;";
+	$query = "SELECT b.id, b.bidder_email, i.name, b.startDate, b.endDate, i.owner, b.status FROM item i, bid b WHERE i.id=b.item_id ORDER BY b.id;";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
@@ -215,6 +219,8 @@ session_start();
         Bid ID: <input type="text" name="ID" id="ID">
         Bidder: <input type="text" name="Bidder" id="bidder">
         Name: <input type="text" name="Name" id="name">
+        Start Date: <input type="date" name = "startDate" >
+        End Date: <input type="date" name="endDate">
         Owner: <input type="text" name="Owner" id="owner">
         Status: <input type="text" name="Status" id="status">
         <input type="submit" name="modify1" value="Modify" >
@@ -231,10 +237,13 @@ session_start();
     $id = $_POST['ID'];
     $bidder = $_POST['Bidder'];
     $name = $_POST['Name'];
+    $sDate = $_POST['startDate'];
+    $eDate = $_POST['endDate'];
     $owner = $_POST['Owner'];
     $status = $_POST['Status'];
     $comma = false;
-    $query = "UPDATE bid SET ";
+    if(!empty($bidder) or !empty($status) or !empty($sDate) or !empty($eDate)){
+        $query = "UPDATE bid SET ";
     if(!empty($bidder)){
       $query .= "bidder_email = '$bidder'";
       $comma = true;
@@ -248,30 +257,54 @@ session_start();
         $comma = true;
       }
     }
-    $query .= " WHERE id = '$id'";
-    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-    pg_free_result($result);
-
-    $comma = false;
-    $query = "UPDATE item SET ";
-    if(!empty($name)){
-      $query .= "name = '$name'";
-      $comma = true;
-    }
-    if(!empty($owner)){
+    if(!empty($sDate)){
       if($comma){
-        $query .= ", owner = '$owner'";
+        $query .= ", startDate = '$sDate'";
       }
       else{
-        $query .= "owner = '$owner'";
+        $query .= "startDate = '$sDate'";
         $comma = true;
       }
     }
-    $query .= " FROM bid b WHERE b.id = '$id' AND b.item_id = item.id";
+    if(!empty($eDate)){
+      if($comma){
+        $query .= ", endDate = '$eDate'";
+      }
+      else{
+        $query .= "endDate = '$eDate'";
+        $comma = true;
+      }
+    }
+    $query .= " WHERE id = '$id'";
+    echo $query . "\n";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     pg_free_result($result);
-    pg_close($dbconn);
-    header("Refresh:1");
+    }
+    
+
+    $comma = false;
+    if(!empty($name) or !empty($owner)){
+      $query = "UPDATE item SET ";
+      if(!empty($name)){
+        $query .= "name = '$name'";
+        $comma = true;
+      }
+      if(!empty($owner)){
+        if($comma){
+          $query .= ", owner = '$owner'";
+        }
+        else{
+          $query .= "owner = '$owner'";
+          $comma = true;
+        }
+      }
+      $query .= " FROM bid b WHERE b.id = '$id' AND b.item_id = item.id";
+      $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+      pg_free_result($result);
+      pg_close($dbconn);
+      header("Refresh:1");
+    }
+    
   }
 ?>
 </td> </tr>
