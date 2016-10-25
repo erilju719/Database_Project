@@ -9,7 +9,7 @@ admin BOOLEAN DEFAULT FALSE
 CREATE TABLE item (
 id SERIAL PRIMARY KEY,
 name VARCHAR(256) NOT NULL,
-deleted BOOLEAN DEFAULT FALSE,
+hidden BOOLEAN DEFAULT FALSE,
 location VARCHAR(512) NOT NULL,
 description VARCHAR(1024) DEFAULT NULL,
 condition VARCHAR(32) DEFAULT 'Good' CHECK(condition = 'Excellent'  OR condition= 'Good' OR condition='Poor' ),
