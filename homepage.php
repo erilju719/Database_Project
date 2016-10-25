@@ -159,7 +159,7 @@ session_start();
       $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
         or die('Could not connect: ' . pg_last_error());
         $usermail = $_SESSION['emailaddress'];
-        $query = "SELECT i.id, i.name, i.location, i.description, i.condition FROM item i WHERE i.owner = '$usermail' AND i.deleted='FALSE'";
+        $query = "SELECT i.id, i.name, i.location, i.description, i.condition FROM item i WHERE i.owner = '$usermail' AND i.hidden='FALSE'";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 	 while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
@@ -183,7 +183,7 @@ session_start();
     }
       if(isset($_POST['deleteItem'])) {
             $item_id = $_POST['item_id'];
-            $query =  "UPDATE item SET deleted='TRUE' WHERE id = '$item_id'";
+            $query =  "UPDATE item SET hidden='TRUE' WHERE id = '$item_id'";
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             echo '<div class="alert alert-success">
             Item successfully deleted! Page will automatically refresh in a moment.
