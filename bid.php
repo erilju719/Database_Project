@@ -217,7 +217,9 @@ $_SESSION["id"]=$_GET["id"];
             exit();
         }
 		$queryclash = "SELECT * FROM bid WHERE status='Accepted' AND item_id='$id'
-							AND (endDate>='$startDate' AND endDate<='$endDate') OR (startDate>='$startDate' AND startDate<='$endDate') OR (startDate<='$startDate' AND endDate>='$endDate')";
+							AND ((endDate>='$startDate' AND endDate<='$endDate') 
+                            OR (startDate>='$startDate' AND startDate<='$endDate') 
+                            OR (startDate<='$startDate' AND endDate>='$endDate'))";
 
 
 		$resultclash = pg_query($queryclash);

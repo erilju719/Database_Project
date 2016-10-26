@@ -3,22 +3,21 @@
 session_start();
 ?>
 
-<!DOCTYPE html>
 <html lang="en">
-	<head>
-    	<meta charset="utf-8">
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
 
-      <link href="assets/bootstrap/css/search.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/search.css" />
 
       <script type="text/javascript" src="assets/jquery/jquery-1.10.2.min.js"></script>
       <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-    	<title> Search page </title>
-  	</head>
+      <title> Search page </title>
+  </head>
 
-  	<body>
+    <body>
     <!-- Set up DB connection -->
     <?php
     $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
@@ -147,74 +146,64 @@ session_start();
 
 
       <!-- Main body -->
-  		<div class="jumbotron">
-      		<div class="container-fluid" id ="jumbo-text">
-      		<h1>Go ahead, search for something!</h1>
-      		<p>Your search results are displayed below.</p>
+      <div class="jumbotron">
+          <div class="container-fluid" id ="jumbo-text">
+          <h1>Go ahead, search for something!</h1>
+          <p>Your search results are displayed below.</p>
           </div>
       </div>
 
       <div class = "container-fluid">
-      <?php if(isset($_POST['formSubmit'])) {
-        //Query
-        $item = $_POST['searched'];
-        $locationQuery = ' AND TRUE';
-        $conditionQuery = ' AND TRUE';
-        $location = $_POST['location'];
-        if ($location != 'All') {
-          $locationQuery = " AND i.location ='" . $location . "'"; 
-        }
+        <?php if(isset($_POST['formSubmit'])) {
+            //Query
+            $item = $_POST['searched'];
+            $locationQuery = ' AND TRUE';
+            $conditionQuery = ' AND TRUE';
+            $location = $_POST['location'];
+                if ($location != 'All') {
+                  $locationQuery = " AND i.location ='" . $location . "'"; 
+                }
 
-        $condition = $_POST['condition'];
-        if ($condition != 'All') {
-          $conditionQuery = " AND i.condition = '" . $condition . "'"; 
-        }
+            $condition = $_POST['condition'];
+                if ($condition != 'All') {
+                  $conditionQuery = " AND i.condition = '" . $condition . "'"; 
+                }
 
-        $username = $_SESSION['emailaddress'];
-        $query = "SELECT DISTINCT i.name, i.condition, i.description, a.name, i.id 
-                  FROM item i, account a 
-                  WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND a.email=i.owner AND i.hidden='FALSE'";
-        $query .= $locationQuery;
-        $query .= $conditionQuery;
-        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+            $username = $_SESSION['emailaddress'];
+            $query = "SELECT DISTINCT i.name, i.location, i.description, i.condition, a.name, i.id 
+                      FROM item i, account a 
+                      WHERE UPPER(i.name) LIKE UPPER('%$item%') AND i.owner!='$username' AND a.email=i.owner AND i.hidden='FALSE'";
+            $query .= $locationQuery;
+            $query .= $conditionQuery;
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+            echo "\t<table class = 'table table-sm' style='font-size: 1.28em; background-color:rgba(100, 100, 200, 0.2);'>\n";
+            echo "\t\t<thead>\n";
+            echo "\t\t\t<tr class = 'info'>\n";
+            echo "\t\t\t\t<th>Name</th>\n";
+            echo "\t\t\t\t<th>Location</th>\n";
+            echo "\t\t\t\t<th>Description</th>\n";
+            echo "\t\t\t\t<th>Condition</th>\n";
+            echo "\t\t\t\t<th>Owner</th>\n";
+            echo "\t\t\t\t<th>Bid</th>\n";
+            echo "\t\t\t</tr>\n";
+            echo "\t\t</thead>\n";
 
-        //Display query result
-        $count = 0;
-        while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
-          if ($count % 2 == 0) {
-            echo "\t<div class='col-md-4' id='line-odd'>\n";
-          } else {
-            echo "\t<div class='col-md-4' id='line-even'>\n";
-          }
-
-          echo "\t\t<div class ='row-fluid'>\n";
-          echo "\t\t\t<div class='col-md-9'>\n";
-
-          echo "\t\t\t\t<h3 class = 'entry-odd'>";
-          echo "Item name: " . $line[0] . "</h3>\n";
-
-          echo "\t\t\t\t<h3 class = 'entry-even'>";
-          echo "Condition: " . $line[1] . "</h3>\n";
-
-          echo "\t\t\t\t<h3 class = 'entry-odd'>";
-          if (is_null($line[2])) {
-            echo "Description: None </h3>\n";
-          } else {
-            echo "Description: " . $line[2] . "</h3>\n";
-          }
-          
-          echo "\t\t\t\t<h3 class = 'entry-even'>";
-          echo "Owner: " . $line[3] . "</h3>\n";
-
-          echo "\t\t\t</div>\n";
-
-          echo "\t\t\t<div class='col-md-3' id = 'bid-col'>\n";
-          echo "\t\t\t\t<a href='bid.php?id=".$line[4]."' class='btn btn-info' role='button'> Add bid!</a>\n";
-          echo "\t\t\t</div>\n";
-          echo "\t\t</div>\n";
-          echo "\t\t</div>\n";
-          $count++;
-        }
+            echo "\t\t<tbody>\n";
+            //Display query result
+            while ($line = pg_fetch_array($result, null, PGSQL_NUM)) {
+              echo "\t\t<tr class ='warning'>\n";
+              for ($x=0;$x<=4;$x++) {
+                if ($x==2 and is_null($line[2])) {
+                    echo "<td>None</td>";
+                } else {
+                  echo "\t\t\t<td>".$line[$x]."</td>\n";
+                }
+              }
+              echo "\t\t\t<td><a href='bid.php?id=".$line[5]."' class='btn btn-info' role='button'> Add bid!</a></td>\n";
+              echo "\t\t</tr>\n";
+            }
+            echo "\t\t</tbody>\n";
+            echo "\t</table>\n";
       pg_free_result($result);
       }
       ?>
@@ -227,5 +216,7 @@ session_start();
         e.stopPropagation();
     });
 </script>
+
 </body>
 </html>
+

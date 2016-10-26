@@ -47,46 +47,26 @@
 	font-family: Helvetica, sans-serif;
 }
 
-body {
-	padding-top: 50px;
-  	padding-bottom: 20px;
-	background-image: url(../../images/jumbo.png);
-	background-size: cover;
-}
-
 .jumbotron {
 	background-color: rgba(0,120,100,0.3);
 }
 
 
 #jumbo-text {
-	color: white;
+	color: aquamarine;
 }
 
-
-#line-odd {
-	background-color: rgba(22,149,163,0.6);
-	color: #EBFF00;
+.info {
+	background-color: rgba(0,0,200,0.4);
 }
 
-#line-even {
-	background-color: rgba(0,0,0,0.38);
-	color: #EBFF00;
+.warning {
+	background-color: rgba(0,200,200,0.8);
 }
 
-.entry-odd {
-	color: #F3FFE2;
-}
-
-.entry-even {
-	color: #EBF700;
-}
-
-#bid-col {
-	padding-top: 3.5em;
-	padding-left: 2em;
-}
-
-.btn-info {
-	font-size: 1.6em;
+body {
+	padding-top: 50px;
+  	padding-bottom: 20px;
+	background-image: url(../../images/jumbo.png);
+	background-size: cover;
 }
