@@ -59,7 +59,7 @@ session_start();
   $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=postgres")
     or die('Could not connect: ' . pg_last_error());
   $usermail = $_SESSION['emailaddress'];
-	$query = "SELECT i.id, i.owner, i.name, i.location, i.condition FROM item i ORDER BY i.id";
+	$query = "SELECT i.id, i.owner, i.name, i.location, i.condition FROM item i WHERE i.hidden = 'FALSE' ORDER BY i.id";
   $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
   //echo "<b>SQL: </b>".$query."<br><br>";
@@ -80,12 +80,13 @@ session_start();
   }
   if(isset($_POST['deleteItem'])) {
     $x = $_POST['yoon'];
-    $query = "DELETE FROM item WHERE item.id = '$x'";
+    $query =  "UPDATE item SET hidden='TRUE' WHERE id = '$x'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     echo '<div class="alert alert-success">
     Item successfully deleted! Page will automatically refresh in a moment.
     </div>';
-    pg_free_result($result);
+    $query2 = "UPDATE bid SET status = 'Declined' WHERE bid.item_id = '$x' AND status = 'Pending'";
+    $result = pg_query($query2) or die('Query failed: ' . pg_last_error());
   }
 	pg_free_result($result);
   pg_close($dbconn);
