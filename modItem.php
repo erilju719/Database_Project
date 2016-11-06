@@ -153,7 +153,7 @@ $dbconn = pg_connect("host=localhost port=5432 dbname=postgres user=postgres pas
       <section>
         <div class="col-lg-8 col-lg-offset-2">
           <div class="page-header">
-            <h2><strong>Edit item (TO BE EDITED)</strong></h2>
+            <h2><strong>Edit item</strong></h2>
           </div>
 
 <?php

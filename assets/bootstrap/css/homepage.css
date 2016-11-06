@@ -53,10 +53,6 @@ body {
   	padding-bottom: 20px;
 }
 
-h2 {
-    color:#ffffff;
-}
-
 .jumbotron {
 	background-color: rgba(0,120,100,0.3);
 }
@@ -64,4 +60,9 @@ h2 {
 
 #jumbo-text {
 	color: white;
+}
+
+
+h2 {
+	color: #CAFFEA;
 }
